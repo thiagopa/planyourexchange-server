@@ -27,6 +27,13 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# Amazon S3 credentials
+AWS_ACCESS_KEY_ID= os.environ.get('AWS_ACCESS_KEY')
+AWS_SECRET_ACCESS_KEY= os.environ.get('AWS_SECRET_ACCESS_KEY')
+AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+MEDIA_URL = "https://%s/" % AWS_S3_CUSTOM_DOMAIN
 
 # Application definition
 
@@ -37,6 +44,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'storages',
     'rest_framework',
     'restserver',
 )
@@ -126,11 +134,3 @@ REST_FRAMEWORK = {
     'PAGE_SIZE' : 10 
 }
 
-# Amazon S3 credentials
-AWS_ACCESS_KEY = os.environ.get('AWS_ACCESS_KEY')
-AWS_SECRET_KEY = os.environ.get('AWS_SECRET_KEY')
-S3_BUCKET = os.environ.get('S3_BUCKET')
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
-
-#MEDIA_ROOT='media/'
-#MEDIA_URL='/media/'

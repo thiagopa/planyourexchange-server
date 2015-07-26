@@ -16,10 +16,10 @@ class GroupSerializer(serializers.HyperlinkedModelSerializer):
         
 class CountrySerializer(serializers.HyperlinkedModelSerializer):
     
-    icon = serializers.SerializerMethodField('get_image_url')
+    #icon = serializers.SerializerMethodField('get_image_url')
     
     class Meta:
         model = Country
         
-    def get_image_url(self, obj):
-        return obj.icon.url
+    #def get_image_url(self, obj):
+    #    return obj.icon.url
