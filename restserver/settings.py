@@ -125,3 +125,6 @@ REST_FRAMEWORK = {
     ],
     'PAGE_SIZE' : 10 
 }
+
+MEDIA_ROOT='media/'
+#MEDIA_URL='/media/'
