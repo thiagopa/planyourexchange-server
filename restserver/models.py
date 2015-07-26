@@ -10,7 +10,9 @@ import moneyed
 # Each model has a name and icon by default
 class AbstractModel(models.Model):
     name = models.CharField(max_length=50)
-    icon = models.ImageField()
+    icon = models.ImageField(upload_to='media/')
+    def __str__(self):
+        return self.name
 
 # Countries available to do exchange    
 class Country(AbstractModel): pass
@@ -32,3 +34,5 @@ class SchoolCourseValue(models.Model):
     course = models.ForeignKey(Course)
     school = models.ForeignKey(School)
     week_price = MoneyField(max_digits=10, decimal_places=2, default_currency='USD')
+    def __str__(self):
+        return '%s at %s costs %s per week' % (self.couse,self.school,self.week_price)
