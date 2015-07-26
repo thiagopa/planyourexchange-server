@@ -10,7 +10,7 @@ import moneyed
 # Each model has a name and icon by default
 class AbstractModel(models.Model):
     name = models.CharField(max_length=50)
-    icon = models.ImageField(upload_to='icons/')
+    icon = models.ImageField(upload_to='icons')
     
     def __str__(self):
         return self.name

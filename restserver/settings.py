@@ -20,7 +20,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'z6w6k^a=u&1vw1qf4xl2xilj*^_6ywv-_=de+ce-7tk4qelb_l'
+SECRET_KEY = os.environ.get('SECRET_KEY') 
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -126,5 +126,11 @@ REST_FRAMEWORK = {
     'PAGE_SIZE' : 10 
 }
 
-MEDIA_ROOT='media/'
+# Amazon S3 credentials
+AWS_ACCESS_KEY = os.environ.get('AWS_ACCESS_KEY')
+AWS_SECRET_KEY = os.environ.get('AWS_SECRET_KEY')
+S3_BUCKET = os.environ.get('S3_BUCKET')
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+
+#MEDIA_ROOT='media/'
 #MEDIA_URL='/media/'
