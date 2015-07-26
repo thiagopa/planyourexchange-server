@@ -1,11 +1,10 @@
 from django.contrib import admin
-from django.apps import apps
-from django.contrib.admin.sites import AlreadyRegistered
+from models import *
 
-app_models = apps.get_app_config('restserver').get_models()
-for model in app_models:
-    try:
-        admin.site.register(model)
-    except AlreadyRegistered:
-        pass
+admin.site.register(Country)
+admin.site.register(City)
+admin.site.register(Course)
+admin.site.register(School)
+admin.site.register(SchoolCourseValue)
+
     
