@@ -1,5 +1,5 @@
 from django.contrib.auth.models import User, Group
-from restserver import *
+from restserver.models import *
 from rest_framework import serializers
 
 
