@@ -87,7 +87,7 @@ WSGI_APPLICATION = 'restserver.wsgi.application'
 
 import dj_database_url
 DATABASES = {
-             'default' : dj_database_url.config(default = 'postgres:///%s'  % (os.environ["USER"])) 
+             'default' : dj_database_url.config() 
 }
 
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
