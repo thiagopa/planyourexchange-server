@@ -21,9 +21,11 @@ from rest_framework.authtoken.views import obtain_auth_token
 
 # Routers provide an easy way of automatically determining the URL conf.
 router = routers.DefaultRouter()
-router.register(r'users', views.UserViewSet)
-router.register(r'groups', views.GroupViewSet)
 router.register(r'countries',views.CountryViewSet)
+router.register(r'cities',views.CityViewSet)
+router.register(r'courses',views.CourseViewSet)
+router.register(r'schools',views.SchoolViewSet)
+router.register(r'coursevaluebyschool',views.SchoolCourseValueViewSet)
 
 urlpatterns = [
     url(r'^', include(router.urls)),
