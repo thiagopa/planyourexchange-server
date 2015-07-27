@@ -18,17 +18,11 @@ class SchoolSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = School
 
-# Custom Serializer for Money
-class MoneyFieldSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = MoneyField
-        fields = ('amount','currency')
-
-# Custom Serializer for values of courses by school
+# Custom Serializer for weekly price of courses by school
 class SchoolCourseValueSerializer(serializers.HyperlinkedModelSerializer):
-    
-    week_price = MoneyFieldSerializer() 
+
+    week_price = serializers.ReadOnlyField(source='week_price.amount')
     
     class Meta:
         model = SchoolCourseValue
-        fields = ('url','course','school','week_price')
+        

@@ -20,4 +20,4 @@ class SchoolViewSet(viewsets.ModelViewSet):
     
 class SchoolCourseValueViewSet(viewsets.ModelViewSet):
     queryset = SchoolCourseValue.objects.all()
-    serializer_class = SchoolCourseValue
+    serializer_class = SchoolCourseValueSerializer
