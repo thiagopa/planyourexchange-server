@@ -1,6 +1,5 @@
 from restserver.models import *
 from rest_framework import serializers
-from djmoney.models.fields import MoneyField
 
 class CountrySerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
