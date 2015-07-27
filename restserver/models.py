@@ -46,7 +46,7 @@ class SchoolCourseValue(models.Model):
     week_price = MoneyField(max_digits=10, decimal_places=2, default_currency='USD')
     
     def __str__(self):
-        return '%s at %s costs %s per week' % (self.couse,self.school,self.week_price)
+        return '%s at %s costs %s per week' % (self.course,self.school,self.week_price)
     
     class Meta:
         verbose_name_plural = 'Course Cost per week by School'
