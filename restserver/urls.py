@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
+from django.views.generic.base import TemplateView
 from rest_framework import routers
 from restserver import views
 from rest_framework.authtoken.views import obtain_auth_token
@@ -28,7 +29,8 @@ router.register(r'schools',views.SchoolViewSet)
 router.register(r'coursevaluebyschool',views.SchoolCourseValueViewSet)
 
 urlpatterns = [
-    url(r'^', include(router.urls)),
+    url(r'^$', TemplateView.as_view(template_name='index.html'), name='home'),
+    url(r'^api/', include(router.urls)),
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^api-token-auth/', obtain_auth_token),
+    url(r'^api/token-auth/', obtain_auth_token),
 ]

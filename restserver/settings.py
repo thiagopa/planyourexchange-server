@@ -82,8 +82,17 @@ TEMPLATES = [
     },
 ]
 
+# heroku template destination
+PROJECT_DIR = os.path.dirname(__file__) 
+
+TEMPLATE_DIRS = (
+    os.path.join(PROJECT_DIR, 'templates'),
+)
+
+
 WSGI_APPLICATION = 'restserver.wsgi.application'
 
+STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
@@ -138,6 +147,10 @@ REST_FRAMEWORK = {
 
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.DjangoModelPermissions',
+    ],
+
+    'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.JSONRenderer',
     ],
     
     'PAGE_SIZE' : 10,

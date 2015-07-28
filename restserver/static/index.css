@@ -1,0 +1,21 @@
+body {
+				color: #666666;
+				background-color: #f9f8f6;
+				background-position: center;
+				font-family: Georgia, Times, serif;
+				line-height: 1.4em;
+				position: fixed;
+				padding-top: 50px;
+				padding-left: 150px;
+}
+
+
+h1 {
+				width: 940px;
+				height: 130px;
+				margin: 0px;
+}
+
+p {
+				padding-left: 25px;
+}
