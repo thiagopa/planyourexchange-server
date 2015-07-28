@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.environ.get('SECRET_KEY') 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = []
 
@@ -90,7 +90,6 @@ WSGI_APPLICATION = 'restserver.wsgi.application'
 
 import dj_database_url
 DATABASES = {
-            # 'default' : dj_database_url.config(default = 'postgres:///%s'  % (os.environ["USER"])) 
             'default' : dj_database_url.config()
 }
 
@@ -144,3 +143,8 @@ REST_FRAMEWORK = {
     'PAGE_SIZE' : 10,
 }
 
+# Load local settings for development environment
+try:
+    from local_settings import *
+except ImportError:
+    pass

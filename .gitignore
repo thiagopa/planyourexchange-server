@@ -3,3 +3,4 @@ venv
 staticfiles
 .env
 db.sqlite3
+restserver/local_settings.py
