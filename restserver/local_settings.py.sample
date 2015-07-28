@@ -1,0 +1,14 @@
+# Sample local settings file that should not be commited to production but used in development
+import os, dj_database_url
+
+# Turns debug on for dev
+DEBUG = True
+
+# Turn off SLL for dev
+SSLIFY_DISABLE = True
+
+# Database for dev
+DATABASES = {
+            'default' : dj_database_url.config(default = 'postgres:///%s'  % (os.environ["USER"])) 
+}
+
