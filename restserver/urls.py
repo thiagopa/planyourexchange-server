@@ -26,7 +26,7 @@ router.register(r'countries',views.CountryViewSet)
 router.register(r'cities',views.CityViewSet)
 router.register(r'courses',views.CourseViewSet)
 router.register(r'schools',views.SchoolViewSet)
-router.register(r'coursevaluebyschool',views.SchoolCourseValueViewSet)
+router.register(r'schoolcoursevalue',views.SchoolCourseValueViewSet)
 
 urlpatterns = [
     url(r'^$', TemplateView.as_view(template_name='index.html'), name='home'),

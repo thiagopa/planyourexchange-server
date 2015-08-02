@@ -1,4 +1,4 @@
-from rest_framework import viewsets
+from rest_framework import viewsets, status
 from restserver.serializers import *
 from restserver.models import *
 from rest_framework.response import Response
@@ -26,7 +26,6 @@ class CityViewSet(viewsets.ModelViewSet):
         # Transfer all courses from relationship to serializer
         serializer = CourseSerializer([scv.course for scv in queryset], many=True)
         return Response(serializer.data)
-        
     
 class CourseViewSet(viewsets.ModelViewSet):
     queryset = Course.objects.all()
@@ -39,3 +38,29 @@ class SchoolViewSet(viewsets.ModelViewSet):
 class SchoolCourseValueViewSet(viewsets.ModelViewSet):
     queryset = SchoolCourseValue.objects.all()
     serializer_class = SchoolCourseValueSerializer
+    
+    # Load School values according to given city, course or school 
+    @list_route(methods=['post'])
+    def find(self, request):
+        serializer = SchoolCourseValueFinderSerializer(data=request.data)
+        if serializer.is_valid() :
+            
+            # Creating filters dynamically and stripping out nulls if needed
+            filters = {'school__city_id' : serializer.data.get('city_id'),
+                       'school__id' : serializer.data.get('school_id'),
+                       'course__id' : serializer.data.get('course_id')
+            }
+            filters = dict(filter(lambda (k,v): v is not None, filters.items()))
+            
+            queryset = SchoolCourseValue.objects.filter(**filters)
+            # If queryset is empty tell it is not found
+            if not queryset.exists() :
+                return Response(status=status.HTTP_404_NOT_FOUND)
+            # serialize the result
+            serializer = SchoolCourseValueSerializer(queryset, many=True)
+            return Response(serializer.data)
+        else:
+            return Response(serializer.errors,
+                            status=status.HTTP_400_BAD_REQUEST)
+            
+    

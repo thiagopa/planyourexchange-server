@@ -26,4 +26,9 @@ class SchoolCourseValueSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = SchoolCourseValue
-        
+
+# Serializer for find parameters
+class SchoolCourseValueFinderSerializer(serializers.Serializer):
+    city_id = serializers.IntegerField()
+    course_id = serializers.IntegerField(required = False)
+    school_id = serializers.IntegerField(required = False)
