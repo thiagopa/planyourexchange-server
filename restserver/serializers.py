@@ -6,6 +6,8 @@ class CountrySerializer(serializers.ModelSerializer):
         model = Country
 
 class CitySerializer(serializers.ModelSerializer):
+    country = CountrySerializer(read_only=True)
+    
     class Meta:
         model = City
 
