@@ -27,6 +27,15 @@ class CityViewSet(viewsets.ModelViewSet):
         serializer = CourseSerializer([scv.course for scv in queryset], many=True)
         return Response(serializer.data)
     
+    # Load courses according to the city
+    @detail_route()
+    def schools(self,request,pk=None):
+        queryset = SchoolCourseValue.objects.filter(school__city=self.get_object())
+        # Transfer all schools from relationship to serializer
+        serializer = SchoolSerializer([scv.school for scv in queryset], many=True)
+        return Response(serializer.data)
+    
+    
 class CourseViewSet(viewsets.ModelViewSet):
     queryset = Course.objects.all()
     serializer_class = CourseSerializer
