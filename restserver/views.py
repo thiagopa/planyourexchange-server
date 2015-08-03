@@ -24,7 +24,8 @@ class CityViewSet(viewsets.ModelViewSet):
     def courses(self,request,pk=None):
         queryset = SchoolCourseValue.objects.filter(school__city=self.get_object())
         # Transfer all courses from relationship to serializer
-        serializer = CourseSerializer([scv.course for scv in queryset], many=True)
+        # Because it comes duplicated, use set to only show unique results
+        serializer = CourseSerializer(set([scv.course for scv in queryset]), many=True)
         return Response(serializer.data)
     
     # Load courses according to the city
@@ -32,7 +33,8 @@ class CityViewSet(viewsets.ModelViewSet):
     def schools(self,request,pk=None):
         queryset = SchoolCourseValue.objects.filter(school__city=self.get_object())
         # Transfer all schools from relationship to serializer
-        serializer = SchoolSerializer([scv.school for scv in queryset], many=True)
+        # Because it comes duplicated, use set to only show unique results
+        serializer = SchoolSerializer(set([scv.school for scv in queryset]), many=True)
         return Response(serializer.data)
     
     
