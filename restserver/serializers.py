@@ -16,6 +16,8 @@ class CourseSerializer(serializers.ModelSerializer):
         model = Course
 
 class SchoolSerializer(serializers.ModelSerializer):
+    city = CitySerializer(read_only=True)
+    
     class Meta:
         model = School
 
