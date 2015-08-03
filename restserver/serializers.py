@@ -23,7 +23,8 @@ class SchoolSerializer(serializers.ModelSerializer):
 
 # Custom Serializer for weekly price of courses by school
 class SchoolCourseValueSerializer(serializers.ModelSerializer):
-
+    school = SchoolSerializer(read_only=True)
+    course = CourseSerializer(read_only=True)
     week_price = serializers.ReadOnlyField(source='week_price.amount')
     
     class Meta:
