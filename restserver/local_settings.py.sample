@@ -1,4 +1,3 @@
-# Sample local settings file that should not be commited to production but used in development
 import os, dj_database_url
 
 # Turns debug on for dev
@@ -6,6 +5,9 @@ DEBUG = True
 
 # Turn off SLL for dev
 SSLIFY_DISABLE = True
+
+# Secret Key when not on heroku (for migrations etc)
+SECRET_KEY="MyDevKey"
 
 # Database for dev
 DATABASES = {
