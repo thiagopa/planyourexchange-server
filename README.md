@@ -9,9 +9,13 @@ Contains all the necessary information to be presented and filtered by the View
 ## Setup
 
 Uses postgresql
+
 Rename local_settings.py.sample to local_settings.py for local development
+
 Uses heroku environment to store production access and keys
+
 But can easily be run with a local database
+
 
 ## License
 
