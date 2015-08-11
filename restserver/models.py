@@ -17,6 +17,7 @@
 """
 from django.db import models
 from djmoney.models.fields import MoneyField
+from djmoney.forms.widgets import CURRENCY_CHOICES
 from django.conf import settings
 from django.db.models.signals import post_save
 from django.dispatch import receiver
@@ -30,15 +31,27 @@ class AbstractModel(models.Model):
     
     def __str__(self):
         return self.name
-
 # Countries available to do exchange    
 class Country(AbstractModel):
+    visa_fee = MoneyField(max_digits=10, decimal_places=2, default_currency=default_currency())
+    
+    default_currency = models.CharField(max_length=3, choices=CURRENCY_CHOICES)
+    
+    def default_currency(self):
+        return self.default_currency
+    
     class Meta:
         verbose_name_plural = "Countries"
+
+# State in which a city belongs to 
+class State(models.Model):
+    name = models.Charfield(max_length=255)
+    abrevation = models.Charfield(max_length=5)
 
 # Cities available in each country
 class City(AbstractModel): 
     country = models.ForeignKey(Country)
+    state = models.ForeignKey(State)
     
     class Meta:
         verbose_name_plural = "Cities"
@@ -50,12 +63,21 @@ class Course(AbstractModel):
 # Schools that are available    
 class School(AbstractModel):
     city = models.ForeignKey(City)
+    address = models.ForeignKey(Address)
+    enrolment_fee = MoneyField(max_digits=10, decimal_places=2, default_currency=default_currency())
+    books_fee = MoneyField(max_digits=10, decimal_places=2, default_currency=default_currency())
+    
+    def default_currency(self):
+        return self.city.country.default_currency
     
 # How much does a course costs in a specific school     
 class SchoolCourseValue(models.Model):
     course = models.ForeignKey(Course)
     school = models.ForeignKey(School)
-    week_price = MoneyField(max_digits=10, decimal_places=2, default_currency='USD')
+    week_price = MoneyField(max_digits=10, decimal_places=2, default_currency=default_currency())
+    
+    def default_currency(self):
+        return self.school.city.country.default_currency
     
     def __str__(self):
         return '%s at %s costs %s per week' % (self.course,self.school,self.week_price)
@@ -63,6 +85,45 @@ class SchoolCourseValue(models.Model):
     class Meta:
         verbose_name_plural = 'Course Cost per week by School'
 
+# Address used by schools 
+class Address(models.Model):
+    line = models.Charfield(max_length=255)
+    suburb = models.Charfield(max_length=50)
+    zip_code = models.IntegerField()
+
+# Cost of living per city
+class CostOfLiving(models.Model):
+    city = models.ForeignKey(City)
+    # per meal
+    restaurant_average_per_meal = MoneyField(max_digits=10, decimal_places=2, default_currency=default_currency())
+    # per month
+    super_market_average_per_month = MoneyField(max_digits=10, decimal_places=2, default_currency=default_currency()) 
+    
+    public_transport_monthly = MoneyField(max_digits=10, decimal_places=2, default_currency=default_currency())
+    # no shareroom
+    rent_average_monthly = MoneyField(max_digits=10, decimal_places=2, default_currency=default_currency())
+    # utilites
+    utilites_average_monthly = MoneyField(max_digits=10, decimal_places=2, default_currency=default_currency())
+    
+    def default_currency(self):
+        return self.city.country.default_currency
+
+# Health Insurrance Providers per country
+class HealthInsurrance(models.Model) :
+    country = models.ForeignKey(Country)
+    
+    company_name = models.Charfield(max_length=255)
+    company_website = models.Charfield(max_length=255)
+    
+    # per month
+    single_price_per_month = MoneyField(max_digits=10, decimal_places=2, default_currency=default_currency())
+    couple_price_per_month = MoneyField(max_digits=10, decimal_places=2, default_currency=default_currency())
+    familly_price_per_month = MoneyField(max_digits=10, decimal_places=2, default_currency=default_currency())
+    
+    def default_currency(self):
+        return self.country.default_currency
+    
+    
 # Generate token for user authentication
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)
 def create_auth_token(sender, instance=None, created=False, **kwargs):
