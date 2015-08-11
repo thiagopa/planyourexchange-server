@@ -32,6 +32,7 @@ class AbstractModel(models.Model):
     
     def __str__(self):
         return self.name
+    
 # Countries available to do exchange    
 class Country(AbstractModel):
 
@@ -46,10 +47,6 @@ class State(models.Model):
     country = models.ForeignKey(Country) 
     name = models.CharField(max_length=255)
     abreviation = models.CharField(max_length=5)
-    
-    def __str__(self):
-        return "%s,%s" % (self.abreviation,self.country)
-
 
 # Cities available in each country
 class City(AbstractModel): 
@@ -62,10 +59,6 @@ class City(AbstractModel):
     
     class Meta:
         verbose_name_plural = "Cities"
-        
-    def __str__(self):
-        return "%s,%s" % (self.name,self.state)
-
 
 # Courses that are available to study
 class Course(AbstractModel):

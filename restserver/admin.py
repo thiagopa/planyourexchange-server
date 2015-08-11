@@ -29,6 +29,11 @@ class ShowIconBaseAdminModel(admin.ModelAdmin):
     icon_display.short_description = 'Icon Display Image'
     icon_display.allow_tags = True
 
+# Show City with full hierarchy display
+@admin.register(City)
+class CityModelAdmin(ShowIconBaseAdminModel):
+    list_display = ('name','state','country')
+
 # Customizing display for values
 @admin.register(SchoolCourseValue)
 class SchoolCourseValueModelAdmin(admin.ModelAdmin):
