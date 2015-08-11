@@ -45,7 +45,7 @@ class Country(AbstractModel):
 
 # State in which a city belongs to 
 class State(models.Model):
-    name = models.Charfield(max_length=255)
+    name = models.CharField(max_length=255)
     abrevation = models.Charfield(max_length=5)
 
 # Cities available in each country
