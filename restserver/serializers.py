@@ -16,9 +16,13 @@
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 """
 from restserver.models import *
+from restserver.fields import MoneyField
 from rest_framework import serializers
 
 class CountrySerializer(serializers.ModelSerializer):
+    
+    visa_fee = MoneyField()
+    
     class Meta:
         model = Country
 
