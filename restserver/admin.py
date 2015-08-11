@@ -43,7 +43,7 @@ class AddressInLine(admin.TabularInline):
     model = Address
     
 class SchoolAdmin(ShowIconBaseAdminModel):
-    inline = [
+    inlines = [
         AddressInLine,
     ]
     
