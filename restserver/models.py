@@ -34,12 +34,9 @@ class AbstractModel(models.Model):
 # Countries available to do exchange    
 class Country(AbstractModel):
 
+    visa_fee = MoneyField(max_digits=10, decimal_places=2)
     default_currency = models.CharField(max_length=3, choices=CURRENCY_CHOICES)
-    fee = models.DecimalField(max_digits=10, decimal_places=2)
-    
-    def visa_fee(self):
-        return Money(self.fee,self.default_currency)
-    
+
     class Meta:
         verbose_name_plural = "Countries"
 
@@ -68,22 +65,20 @@ class Address(models.Model):
 
 # Schools that are available    
 class School(AbstractModel):
+    def default_currency():
+        return self.city.country.default_currency
+    
     city = models.ForeignKey(City)
     address = models.ForeignKey(Address)
-    enrolment_fee = MoneyField(max_digits=10, decimal_places=2, default_currency=default_currency())
-    books_fee = MoneyField(max_digits=10, decimal_places=2, default_currency=default_currency())
+    enrolment_fee = MoneyField(max_digits=10, decimal_places=2)
+    books_fee = MoneyField(max_digits=10, decimal_places=2)
     
-    def default_currency(self):
-        return self.city.country.default_currency
     
 # How much does a course costs in a specific school     
 class SchoolCourseValue(models.Model):
     course = models.ForeignKey(Course)
     school = models.ForeignKey(School)
-    week_price = MoneyField(max_digits=10, decimal_places=2, default_currency=default_currency())
-    
-    def default_currency(self):
-        return self.school.city.country.default_currency
+    week_price = MoneyField(max_digits=10, decimal_places=2)
     
     def __str__(self):
         return '%s at %s costs %s per week' % (self.course,self.school,self.week_price)
@@ -95,18 +90,15 @@ class SchoolCourseValue(models.Model):
 class CostOfLiving(models.Model):
     city = models.ForeignKey(City)
     # per meal
-    restaurant_average_per_meal = MoneyField(max_digits=10, decimal_places=2, default_currency=default_currency())
+    restaurant_average_per_meal = MoneyField(max_digits=10, decimal_places=2)
     # per month
-    super_market_average_per_month = MoneyField(max_digits=10, decimal_places=2, default_currency=default_currency()) 
+    super_market_average_per_month = MoneyField(max_digits=10, decimal_places=2) 
     
-    public_transport_monthly = MoneyField(max_digits=10, decimal_places=2, default_currency=default_currency())
+    public_transport_monthly = MoneyField(max_digits=10, decimal_places=2)
     # no shareroom
-    rent_average_monthly = MoneyField(max_digits=10, decimal_places=2, default_currency=default_currency())
+    rent_average_monthly = MoneyField(max_digits=10, decimal_places=2)
     # utilites
-    utilites_average_monthly = MoneyField(max_digits=10, decimal_places=2, default_currency=default_currency())
-    
-    def default_currency(self):
-        return self.city.country.default_currency
+    utilites_average_monthly = MoneyField(max_digits=10, decimal_places=2)
 
 # Health Insurrance Providers per country
 class HealthInsurrance(models.Model) :
@@ -116,13 +108,9 @@ class HealthInsurrance(models.Model) :
     company_website = models.Charfield(max_length=255)
     
     # per month
-    single_price_per_month = MoneyField(max_digits=10, decimal_places=2, default_currency=default_currency())
-    couple_price_per_month = MoneyField(max_digits=10, decimal_places=2, default_currency=default_currency())
-    familly_price_per_month = MoneyField(max_digits=10, decimal_places=2, default_currency=default_currency())
-    
-    def default_currency(self):
-        return self.country.default_currency
-    
+    single_price_per_month = MoneyField(max_digits=10, decimal_places=2)
+    couple_price_per_month = MoneyField(max_digits=10, decimal_places=2)
+    familly_price_per_month = MoneyField(max_digits=10, decimal_places=2)
     
 # Generate token for user authentication
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)
