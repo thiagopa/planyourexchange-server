@@ -97,17 +97,21 @@ class SchoolCourseValue(models.Model):
 
 # Cost of living per city
 class CostOfLiving(models.Model):
-    city = models.ForeignKey(City)
-    # per meal
-    restaurant_average_per_meal = MoneyField(max_digits=10, decimal_places=2)
-    # per month
-    super_market_average_per_month = MoneyField(max_digits=10, decimal_places=2) 
+    # Chaining the city selection to whichever country and state is selected
+    country = models.ForeignKey(Country)
+    state = ChainedForeignKey(State, chained_field="country", chained_model_field="country")
+    city = ChainedForeignKey(City, chained_field="state", chained_model_field="state")
     
-    public_transport_monthly = MoneyField(max_digits=10, decimal_places=2)
+    # per meal
+    restaurant_average_per_meal = MoneyField(verbose_name="Average meal in Restaurant",max_digits=10, decimal_places=2)
+    # per month
+    super_market_average_per_month = MoneyField(verbose_name="Average Supermarket per Month", max_digits=10, decimal_places=2) 
+    
+    public_transport_monthly = MoneyField(verbose_name="Monthly Public Transport ticket",max_digits=10, decimal_places=2)
     # no shareroom
-    rent_average_monthly = MoneyField(max_digits=10, decimal_places=2)
+    rent_average_monthly = MoneyField(verbose_name="Average Rent per Month",max_digits=10, decimal_places=2)
     # utilites
-    utilites_average_monthly = MoneyField(max_digits=10, decimal_places=2)
+    utilites_average_monthly = MoneyField(verbose_name="Average Utilites per Month",max_digits=10, decimal_places=2)
     
     class Meta:
         verbose_name_plural = "Costs of Living"

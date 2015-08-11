@@ -32,7 +32,7 @@ class ShowIconBaseAdminModel(admin.ModelAdmin):
 # Show City with full hierarchy display
 @admin.register(City)
 class CityModelAdmin(ShowIconBaseAdminModel):
-    list_display = ('name','state','country')
+    list_display = ('name','state','country',)
 
 # Customizing display for values
 @admin.register(SchoolCourseValue)
@@ -71,6 +71,28 @@ class CountryAdmin(ShowIconBaseAdminModel):
         StateInLine
     ]    
 
-# Registering all remaining models that have not been customized
-admin.site.register(CostOfLiving)
-admin.site.register(HealthInsurrance)
+# HealthInsurrance with Country List
+@admin.register(HealthInsurrance)
+class HealthInsuranceModelAdmin(admin.ModelAdmin):
+    list_display = ('name','country',)
+
+# Grouping different type of quotes
+@admin.register(CostOfLiving)
+class CostOfLivingModelAdmin(admin.ModelAdmin):
+    list_display = ('name','state','country',)
+    
+    fieldsets = (
+        (None, {
+            'fields' : ('country','state','city')
+        }),
+        ('Food',{
+            'fields' : ('restaurant_average_per_meal','super_market_average_per_month')
+        }),
+        ('Transport',{
+            'fields' : ('public_transport_monthly')
+        }),
+        ('Housing',{
+            'fields' : ('rent_average_monthly','utilites_average_monthly')
+        }),
+
+    )
