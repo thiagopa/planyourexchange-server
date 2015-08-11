@@ -25,16 +25,24 @@ class CountryViewSet(viewsets.ModelViewSet):
     queryset = Country.objects.all()
     serializer_class = CountrySerializer
     
-    # Extra method for loading cities according to the parent country
     @detail_route()
     def cities(self,request,pk=None):
-        queryset = City.objects.filter(country=self.get_object())
-        serializer = CitySerializer(queryset, many=True)
-        return Response(serializer.data)
-    
-    @detail_rote()
-    def healthinsurances(self,request,pk=None):
+        """
+            Load Cities according to the parent country
+        """
+        return self.generic_data_load(City,CitySerializer)
         
+    @detail_route()
+    def healthinsurrances(self,request,pk=None):
+        """
+        Load Health Insurances per Country
+        """
+        return self.generic_data_load(HealthInsurrance,HealthInsurranceSerializer)
+    
+    def generic_data_load(self,model,serializer_class):
+        queryset = model.objects.filter(country=self.get_object())
+        serializer = serializer_class(queryset,many=True)
+        return Response(serializer.data)
     
 class CityViewSet(viewsets.ModelViewSet):
     queryset = City.objects.all()
