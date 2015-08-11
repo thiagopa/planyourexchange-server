@@ -60,6 +60,12 @@ class City(AbstractModel):
 class Course(AbstractModel):
     week_duration = models.IntegerField()
 
+# Address used by schools 
+class Address(models.Model):
+    line = models.CharField(max_length=255)
+    suburb = models.CharField(max_length=50)
+    zip_code = models.IntegerField()
+
 # Schools that are available    
 class School(AbstractModel):
     city = models.ForeignKey(City)
@@ -84,12 +90,6 @@ class SchoolCourseValue(models.Model):
     
     class Meta:
         verbose_name_plural = 'Course Cost per week by School'
-
-# Address used by schools 
-class Address(models.Model):
-    line = models.Charfield(max_length=255)
-    suburb = models.Charfield(max_length=50)
-    zip_code = models.IntegerField()
 
 # Cost of living per city
 class CostOfLiving(models.Model):
