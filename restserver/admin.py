@@ -38,6 +38,16 @@ class SchoolCourseValueModelAdmin(admin.ModelAdmin):
     currency.short_description = 'Currency'
     currency.admin_order_field = 'week_price_currency'
 
+# Address being edited inside School 
+class AddressInLine(admin.TabularInline):
+    model = Address
+    
+class SchoolAdmin(ShowIconBaseAdminModel):
+    inline = [
+        AddressInLine,
+    ]
+    
+
 # Registering all models
 admin.site.register(Country,ShowIconBaseAdminModel)
 admin.site.register(City,ShowIconBaseAdminModel)
@@ -45,6 +55,5 @@ admin.site.register(Course,ShowIconBaseAdminModel)
 admin.site.register(School,ShowIconBaseAdminModel)
 admin.site.register(SchoolCourseValue,SchoolCourseValueModelAdmin)
 admin.site.register(State)
-admin.site.register(Address)
 admin.site.register(CostOfLiving)
 admin.site.register(HealthInsurrance)
