@@ -48,7 +48,7 @@ class State(models.Model):
 # Cities available in each country
 class City(AbstractModel): 
     country = models.ForeignKey(Country)
-    state = models.ForeignKey(State, null=True)
+    state = models.ForeignKey(State)
     
     class Meta:
         verbose_name_plural = "Cities"
@@ -67,7 +67,7 @@ class Address(models.Model):
 class School(AbstractModel):
     
     city = models.ForeignKey(City)
-    address = models.ForeignKey(Address, null=True)
+    address = models.ForeignKey(Address)
     enrolment_fee = MoneyField(max_digits=10, decimal_places=2)
     books_fee = MoneyField(max_digits=10, decimal_places=2)
     
