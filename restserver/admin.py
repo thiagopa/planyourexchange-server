@@ -16,6 +16,7 @@
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 """
 from django.contrib import admin
+from django import forms
 from models import *
 
 # Base Model to show real image of Icons intead of urls in forms
@@ -56,9 +57,19 @@ class SchoolAdmin(ShowIconBaseAdminModel):
             'fields' : ('address_line','suburb','zip_code','country','state','city',)
         }),
         ('Fees',{
-            'fields' : ('enrolment_fee','books_fee',)
+            'fields' : (('proxy_enrolment_fee','default_currency'),('proxy_books_fee','default_currency'),)
         }),
     )
+    
+    readonly_fields = ('default_currency',)
+    
+    def default_currency(self, instance):
+        return instance.country.default_currency
+
+    default_currency.short_description = 'Default Currency'
+    
+    proxy_enrolment_fee = forms.DecimalField(max_digits=10, decimal_places=2)
+    proxy_books_fee = forms.DecimalField(max_digits=10, decimal_places=2)
     
     
 # States being edited inside the Country    
