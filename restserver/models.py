@@ -54,7 +54,11 @@ class State(models.Model):
 # Cities available in each country
 class City(AbstractModel): 
     country = models.ForeignKey(Country)
-    state = models.ForeignKey(State)
+    state = models.ChainedForeignKey(State,
+        chained_field="country",
+        chained_model_field="country", 
+        show_all=False, 
+        auto_choose=True)
     
     class Meta:
         verbose_name_plural = "Cities"
