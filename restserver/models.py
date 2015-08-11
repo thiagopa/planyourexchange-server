@@ -71,7 +71,10 @@ class Course(AbstractModel):
 # Schools that are available    
 class School(AbstractModel):
     
-    city = models.ForeignKey(City)
+    # Chaining the city selection to whichever country and state is selected
+    country = models.ForeignKey(Country)
+    state = ChainedForeignKey(State, chained_field="country", chained_model_field="country")
+    city = ChainedForeignKey(City, chained_field="state", chained_model_field="state")
     # fees
     enrolment_fee = MoneyField(max_digits=10, decimal_places=2)
     books_fee = MoneyField(max_digits=10, decimal_places=2)

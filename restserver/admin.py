@@ -53,7 +53,7 @@ class SchoolAdmin(ShowIconBaseAdminModel):
             'fields' : ('name','icon')
         }),
         ('Address',{
-            'fields' : ('address_line','suburb','zip_code','city')
+            'fields' : ('address_line','suburb','zip_code','country','state','city')
         }),
         ('Fees',{
             'fields' : ('enrolment_fee','books_fee')
