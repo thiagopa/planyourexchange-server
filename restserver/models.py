@@ -78,7 +78,7 @@ class Address(models.Model):
 class School(AbstractModel):
     
     city = models.ForeignKey(City)
-    address = models.ForeignKey(Address)
+    address = models.OneToOneField(Address)
     enrolment_fee = MoneyField(max_digits=10, decimal_places=2)
     books_fee = MoneyField(max_digits=10, decimal_places=2)
     
