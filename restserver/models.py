@@ -42,8 +42,13 @@ class Country(AbstractModel):
 
 # State in which a city belongs to 
 class State(models.Model):
+    country = models.ForeignKey(Country) 
     name = models.CharField(max_length=255)
     abrevation = models.CharField(max_length=5)
+    
+    def __str__(self):
+        return self.abreviation
+
 
 # Cities available in each country
 class City(AbstractModel): 
@@ -65,7 +70,9 @@ class Address(models.Model):
     
     class Meta:
         verbose_name_plural = "Addresses"
-
+        
+    def __str__(self):
+        return '%s,%s,%s' % (self.line,self.suburb,self.zip_code)
 
 # Schools that are available    
 class School(AbstractModel):
