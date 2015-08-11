@@ -35,14 +35,6 @@ class AbstractModel(models.Model):
     def __str__(self):
         return self.name
 
-class DefaultCurrency:
-    """
-        Default currency that comes from the country's object
-    """
-    @property
-    def default_currency(self):
-        self.country.currency
-    
 class Country(AbstractModel):
     """
         Countries available to do exchange 
@@ -86,7 +78,7 @@ class Course(AbstractModel):
     week_duration = models.IntegerField()
 
 
-class School(AbstractModel,DefaultCurrency):
+class School(AbstractModel):
     """
         Schools that are available    
     """
@@ -102,11 +94,12 @@ class School(AbstractModel,DefaultCurrency):
     suburb = models.CharField(max_length=50)
     zip_code = models.IntegerField()
 
-# Save default value for currencies
-@receiver(pre_save, sender=School)
-def save_default_currency(sender, instance, **kwargs):
-    instance.enrolment_fee.default_currency = instance.default_currency
-    instance.books_fee.default_currency = instance.default_currency
+    # Save default value for currencies
+    def save(self, *args, **kwargs):
+        self.enrolment_fee_currency = self.country.default_currency
+        self.books_fee_currency = self.country.default_currency
+        
+        super(School,self).save(*args, **kwargs)
     
 # How much does a course costs in a specific school     
 class SchoolCourseValue(models.Model):

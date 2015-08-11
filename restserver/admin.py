@@ -50,6 +50,8 @@ class SchoolCourseValueModelAdmin(admin.ModelAdmin):
 @admin.register(School)
 class SchoolAdmin(ShowIconBaseAdminModel):
     
+    readonly_fields = ('icon_display','default_currency')
+    
     fieldsets = (
         (None, {
             'fields' : ('name','icon','icon_display',)
@@ -61,6 +63,9 @@ class SchoolAdmin(ShowIconBaseAdminModel):
             'fields' : ('default_currency', 'enrolment_fee','books_fee',)
         }),
     )
+    
+    def default_currency(self,instance):
+        return instance.country.default_currency
     
 # States being edited inside the Country    
 class StateInLine(admin.TabularInline):
