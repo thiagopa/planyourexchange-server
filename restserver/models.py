@@ -47,7 +47,7 @@ class State(models.Model):
     abreviation = models.CharField(max_length=5)
     
     def __str__(self):
-        return self.abreviation
+        return "%s,%s" % (self.abreviation,self.country)
 
 
 # Cities available in each country
@@ -57,32 +57,26 @@ class City(AbstractModel):
     
     class Meta:
         verbose_name_plural = "Cities"
+        
+    def __str__(self):
+        return "%s,%s" % (self.name,self.state)
+
 
 # Courses that are available to study
 class Course(AbstractModel):
     week_duration = models.IntegerField()
 
-# Address used by schools 
-class Address(models.Model):
-    
-    line = models.CharField(max_length=255)
-    suburb = models.CharField(max_length=50)
-    zip_code = models.IntegerField()
-    
-    class Meta:
-        verbose_name_plural = "Addresses"
-        
-    def __str__(self):
-        return '%s,%s,%s' % (self.line,self.suburb,self.zip_code)
-
 # Schools that are available    
 class School(AbstractModel):
     
     city = models.ForeignKey(City)
-    address = models.OneToOneField(Address)
+    # fees
     enrolment_fee = MoneyField(max_digits=10, decimal_places=2)
     books_fee = MoneyField(max_digits=10, decimal_places=2)
-    
+    # address
+    address_line = models.CharField(max_length=255)
+    suburb = models.CharField(max_length=50)
+    zip_code = models.IntegerField()
     
 # How much does a course costs in a specific school     
 class SchoolCourseValue(models.Model):

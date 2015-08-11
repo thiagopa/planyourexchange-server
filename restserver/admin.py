@@ -19,6 +19,7 @@ from django.contrib import admin
 from models import *
 
 # Base Model to show real image of Icons intead of urls in forms
+@admin.register(City,Course)
 class ShowIconBaseAdminModel(admin.ModelAdmin):
     readonly_fields = ('icon_display',)
     
@@ -29,6 +30,7 @@ class ShowIconBaseAdminModel(admin.ModelAdmin):
     icon_display.allow_tags = True
 
 # Customizing display for values
+@admin.register(SchoolCourseValue)
 class SchoolCourseValueModelAdmin(admin.ModelAdmin):
     list_display = ('course','school','week_price', 'currency',)
 
@@ -38,30 +40,32 @@ class SchoolCourseValueModelAdmin(admin.ModelAdmin):
     currency.short_description = 'Currency'
     currency.admin_order_field = 'week_price_currency'
 
-# Address being edited inside School 
-"""
-class AddressInLine(admin.TabularInline):
-    model = Address
-    
+# Address being edited inside School organized by fieldsets
+@admin.register(School)
 class SchoolAdmin(ShowIconBaseAdminModel):
-    inlines = [
-        AddressInLine,
-    ]
-"""    
+    fieldsets = (
+        (None, {
+            'fields' : ('name','icon')
+        }),
+        ('Address',{
+            'fields' : ('address_line','suburb','zip_code','city')
+        }),
+        ('Fees',{
+            'fields' : ('enrolment_fee','books_fee')
+        }),
+    )
+    
+    
+# States being edited inside the Country    
 class StateInLine(admin.TabularInline):
     model = State
 
+@admin.register(Country)
 class CountryAdmin(ShowIconBaseAdminModel):
     inlines = [
         StateInLine
     ]    
 
-# Registering all models
-admin.site.register(Country,CountryAdmin)
-admin.site.register(City,ShowIconBaseAdminModel)
-admin.site.register(Course,ShowIconBaseAdminModel)
-# admin.site.register(School,SchoolAdmin)
-admin.site.register(SchoolCourseValue,SchoolCourseValueModelAdmin)
-# admin.site.register(State)
+# Registering all remaining models that have not been customized
 admin.site.register(CostOfLiving)
 admin.site.register(HealthInsurrance)
