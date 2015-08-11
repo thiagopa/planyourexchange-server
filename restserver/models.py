@@ -33,12 +33,12 @@ class AbstractModel(models.Model):
         return self.name
 # Countries available to do exchange    
 class Country(AbstractModel):
-    visa_fee = MoneyField(max_digits=10, decimal_places=2, default_currency=default_currency())
-    
+
     default_currency = models.CharField(max_length=3, choices=CURRENCY_CHOICES)
+    fee = models.DecimalField(max_digits=10, decimal_places=2)
     
-    def default_currency(self):
-        return self.default_currency
+    def visa_fee(self):
+        return Money(self.fee,self.default_currency)
     
     class Meta:
         verbose_name_plural = "Countries"
