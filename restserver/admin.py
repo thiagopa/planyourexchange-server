@@ -19,7 +19,7 @@ from django.contrib import admin
 from models import *
 
 # Base Model to show real image of Icons intead of urls in forms
-@admin.register(City,Course)
+@admin.register(Course)
 class ShowIconBaseAdminModel(admin.ModelAdmin):
     readonly_fields = ('icon_display',)
     
