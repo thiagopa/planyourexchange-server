@@ -172,6 +172,8 @@ def create_auth_token(sender, instance=None, created=False, **kwargs):
 # Used to save all currencies with the default country
 @receiver(pre_save)
 def default_currency(sender, instance, *args, **kwargs):
+    default_currency = None
+    
     if hasattr(instance,'country_id'):
         default_currency = instance.country.default_currency
     elif hasattr(instance,'default_currency'):
