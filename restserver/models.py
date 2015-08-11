@@ -25,30 +25,38 @@ from rest_framework.authtoken.models import Token
 from smart_selects.db_fields import ChainedForeignKey 
 import moneyed
 
-# Each model has a name and icon by default
 class AbstractModel(models.Model):
+    """
+        Each model has a name and icon by default
+    """
     name = models.CharField(max_length=50)
     icon = models.ImageField(upload_to='icons')
     
     def __str__(self):
         return self.name
 
-# Default currency
 class DefaultCurrency:
+    """
+        Default currency that comes from the country's object
+    """
+    @property
     def default_currency(self):
         self.country.currency
     
-# Countries available to do exchange    
 class Country(AbstractModel):
-
+    """
+        Countries available to do exchange 
+    """
     visa_fee = MoneyField(max_digits=10, decimal_places=2)
     default_currency = models.CharField(max_length=3, choices=CURRENCY_CHOICES)
 
     class Meta:
         verbose_name_plural = "Countries"
 
-# State in which a city belongs to 
 class State(models.Model):
+    """
+        State in which a city belongs to 
+    """
     country = models.ForeignKey(Country) 
     name = models.CharField(max_length=255)
     abreviation = models.CharField(max_length=5)
@@ -57,8 +65,10 @@ class State(models.Model):
         return self.abreviation
 
 
-# Cities available in each country
-class City(AbstractModel): 
+class City(AbstractModel):
+    """
+        Cities available in each country
+    """ 
     country = models.ForeignKey(Country)
     state = ChainedForeignKey(State,
         chained_field="country",
@@ -69,13 +79,17 @@ class City(AbstractModel):
     class Meta:
         verbose_name_plural = "Cities"
 
-# Courses that are available to study
 class Course(AbstractModel):
+    """
+        Courses that are available to study
+    """
     week_duration = models.IntegerField()
 
-# Schools that are available    
+
 class School(AbstractModel,DefaultCurrency):
-    
+    """
+        Schools that are available    
+    """
     # Chaining the city selection to whichever country and state is selected
     country = models.ForeignKey(Country)
     state = ChainedForeignKey(State, chained_field="country", chained_model_field="country")
@@ -106,8 +120,10 @@ class SchoolCourseValue(models.Model):
     class Meta:
         verbose_name_plural = 'Course Cost per week by School'
 
-# Cost of living per city
 class CostOfLiving(models.Model):
+    """
+        Cost of living per city
+    """
     # Chaining the city selection to whichever country and state is selected
     country = models.ForeignKey(Country)
     state = ChainedForeignKey(State, chained_field="country", chained_model_field="country")
@@ -127,9 +143,10 @@ class CostOfLiving(models.Model):
     class Meta:
         verbose_name_plural = "Costs of Living"
 
-
-# Health Insurrance Providers per country
 class HealthInsurrance(models.Model) :
+    """
+        Health Insurrance Providers per country
+    """
     country = models.ForeignKey(Country)
     
     company_name = models.CharField(max_length=255)
