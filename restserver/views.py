@@ -48,24 +48,23 @@ class CityViewSet(viewsets.ModelViewSet):
     queryset = City.objects.all()
     serializer_class = CitySerializer
     
-    # Load courses according to the city
     @detail_route()
     def courses(self,request,pk=None):
-        queryset = SchoolCourseValue.objects.filter(school__city=self.get_object())
-        # Transfer all courses from relationship to serializer
-        # Because it comes duplicated, use set to only show unique results
-        serializer = CourseSerializer(set([scv.course for scv in queryset]), many=True)
-        return Response(serializer.data)
+        return self.generic_data_load(CourseSerializer,lambda scv: scv.course)
     
-    # Load courses according to the city
     @detail_route()
     def schools(self,request,pk=None):
-        queryset = SchoolCourseValue.objects.filter(school__city=self.get_object())
-        # Transfer all schools from relationship to serializer
-        # Because it comes duplicated, use set to only show unique results
-        serializer = SchoolSerializer(set([scv.school for scv in queryset]), many=True)
-        return Response(serializer.data)
+        return self.generic_data_load(SchoolSerializer,lambda scv: scv.school)
     
+    def generic_data_load(self,serializer_class,query_object):
+        """
+             Transfer all schools/courses from relationship to serializer
+             Because it comes duplicated, use set to only show unique results
+        """
+        queryset = SchoolCourseValue.objects.filter(school__city=self.get_object())
+        serializer = serializer_class(set([query_object(scv) for scv in queryset]), many=True)
+        return Response(serializer.data)
+        
     
 class CourseViewSet(viewsets.ModelViewSet):
     queryset = Course.objects.all()
