@@ -46,9 +46,18 @@ class SchoolCourseValueModelAdmin(admin.ModelAdmin):
     currency.short_description = 'Currency'
     currency.admin_order_field = 'week_price_currency'
 
+# Utility for not having to select the currency all the time
+"""
+class SchoolForm(forms.Form):
+    enrolment_fee = forms.DecimalField(max_digits=10, decimal_places=2)
+    books_fee = forms.DecimalField(max_digits=10, decimal_places=2)
+"""    
+
 # Address being edited inside School organized by fieldsets
 @admin.register(School)
 class SchoolAdmin(ShowIconBaseAdminModel):
+    form = DefaultCurrencyForm
+    
     fieldsets = (
         (None, {
             'fields' : ('name','icon','icon_display',)
@@ -57,20 +66,16 @@ class SchoolAdmin(ShowIconBaseAdminModel):
             'fields' : ('address_line','suburb','zip_code','country','state','city',)
         }),
         ('Fees',{
-            'fields' : (('proxy_enrolment_fee','default_currency'),('proxy_books_fee','default_currency'),)
+            'fields' : ('default_currency', 'enrolment_fee','books_fee',)
         }),
     )
-    
+
     readonly_fields = ('default_currency',)
     
     def default_currency(self, instance):
         return instance.country.default_currency
 
     default_currency.short_description = 'Default Currency'
-    
-    proxy_enrolment_fee = forms.DecimalField(max_digits=10, decimal_places=2)
-    proxy_books_fee = forms.DecimalField(max_digits=10, decimal_places=2)
-    
     
 # States being edited inside the Country    
 class StateInLine(admin.TabularInline):

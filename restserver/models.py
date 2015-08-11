@@ -19,7 +19,7 @@ from django.db import models
 from djmoney.models.fields import MoneyField
 from djmoney.forms.widgets import CURRENCY_CHOICES
 from django.conf import settings
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save, pre_save
 from django.dispatch import receiver
 from rest_framework.authtoken.models import Token
 from smart_selects.db_fields import ChainedForeignKey 
@@ -82,6 +82,12 @@ class School(AbstractModel):
     address_line = models.CharField(max_length=255)
     suburb = models.CharField(max_length=50)
     zip_code = models.IntegerField()
+
+    # Save default value for currencies
+    @receiver(pre_save, sender=School)
+    def save_default_currency(sender, instance, **kwargs):
+         instance.enrolment_fee.default_currency = instance.country.default_currency
+         instance.books_fee.default_currency = instance.country.default_currency
     
 # How much does a course costs in a specific school     
 class SchoolCourseValue(models.Model):
