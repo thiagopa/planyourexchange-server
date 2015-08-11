@@ -18,6 +18,7 @@
 from django.contrib import admin
 from django import forms
 from models import *
+from moneyed import CURRENCIES
 
 # Base Model to show real image of Icons intead of urls in forms
 @admin.register(Course)
@@ -46,11 +47,16 @@ class SchoolCourseValueModelAdmin(admin.ModelAdmin):
     currency.short_description = 'Currency'
     currency.admin_order_field = 'week_price_currency'
 
+# Default Currency
+class DefaultCurrencyAdminModel(ShowIconBaseAdminModel):
+    readonly_fields = ('icon_display','default_currency')
+    
+    def default_currency(self,instance):
+        return CURRENCIES[instance.country.default_currency].name
+
 # Address being edited inside School organized by fieldsets
 @admin.register(School)
-class SchoolAdmin(ShowIconBaseAdminModel):
-    
-    readonly_fields = ('icon_display','default_currency')
+class SchoolAdmin(DefaultCurrencyAdminModel):
     
     fieldsets = (
         (None, {
@@ -63,9 +69,6 @@ class SchoolAdmin(ShowIconBaseAdminModel):
             'fields' : ('default_currency', 'enrolment_fee','books_fee',)
         }),
     )
-    
-    def default_currency(self,instance):
-        return instance.country.default_currency
     
 # States being edited inside the Country    
 class StateInLine(admin.TabularInline):

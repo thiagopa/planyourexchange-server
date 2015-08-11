@@ -77,7 +77,6 @@ class Course(AbstractModel):
     """
     week_duration = models.IntegerField()
 
-
 class School(AbstractModel):
     """
         Schools that are available    
@@ -94,13 +93,6 @@ class School(AbstractModel):
     suburb = models.CharField(max_length=50)
     zip_code = models.IntegerField()
 
-    # Save default value for currencies
-    def save(self, *args, **kwargs):
-        self.enrolment_fee_currency = self.country.default_currency
-        self.books_fee_currency = self.country.default_currency
-        
-        super(School,self).save(*args, **kwargs)
-    
 # How much does a course costs in a specific school     
 class SchoolCourseValue(models.Model):
     course = models.ForeignKey(Course)
@@ -135,6 +127,17 @@ class CostOfLiving(models.Model):
     
     class Meta:
         verbose_name_plural = "Costs of Living"
+        
+    # Save default value for currencies
+    def save(self, *args, **kwargs):
+        
+        self.restaurant_average_per_meal_currency = self.country.default_currency
+        self.super_market_average_per_month_currency = self.country.default_currency
+        self.rent_average_monthly_currency = self.country.default_currency
+        self.utilites_average_monthly_currency = self.country.default_currency
+
+        super(CostOfLiving,self).save(*args, **kwargs)
+
 
 class HealthInsurrance(models.Model) :
     """
@@ -150,8 +153,31 @@ class HealthInsurrance(models.Model) :
     couple_price_per_month = MoneyField(max_digits=10, decimal_places=2)
     familly_price_per_month = MoneyField(max_digits=10, decimal_places=2)
     
+    # Save default value for currencies
+    def save(self, *args, **kwargs):
+        
+        self.single_price_per_month_currency = self.country.default_currency
+        self.couple_price_per_month_currency = self.country.default_currency
+        self.familly_price_per_month_currency = self.country.default_currency
+        
+        super(HealthInsurrance,self).save(*args, **kwargs)
+
+    
 # Generate token for user authentication
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)
 def create_auth_token(sender, instance=None, created=False, **kwargs):
     if created:
         Token.objects.create(user=instance)
+
+# Used to save all currencies with the default country
+@receiver(pre_save)
+def default_currency(sender, instance, *args, **kwargs):
+    if hasattr(instance,'country_id'):
+        default_currency = instance.country.default_currency
+    elif hasattr(instance,'default_currency'):
+        default_currency = instance.default_currency
+    
+    if default_currency:
+        for attr in dir(instance):
+            if attr.endswith('currency'):
+                setattr(instance,attr,default_currency)
