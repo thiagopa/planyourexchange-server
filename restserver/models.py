@@ -64,6 +64,7 @@ class Course(AbstractModel):
 
 # Address used by schools 
 class Address(models.Model):
+    
     line = models.CharField(max_length=255)
     suburb = models.CharField(max_length=50)
     zip_code = models.IntegerField()
