@@ -104,8 +104,8 @@ class CostOfLiving(models.Model):
 class HealthInsurrance(models.Model) :
     country = models.ForeignKey(Country)
     
-    company_name = models.Charfield(max_length=255)
-    company_website = models.Charfield(max_length=255)
+    company_name = models.CharField(max_length=255)
+    company_website = models.CharField(max_length=255)
     
     # per month
     single_price_per_month = MoneyField(max_digits=10, decimal_places=2)
