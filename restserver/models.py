@@ -22,6 +22,7 @@ from django.conf import settings
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from rest_framework.authtoken.models import Token
+from smart_selects.db_fields import ChainedForeignKey 
 import moneyed
 
 # Each model has a name and icon by default

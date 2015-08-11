@@ -31,8 +31,13 @@ router.register(r'schools',views.SchoolViewSet)
 router.register(r'schoolcoursevalue',views.SchoolCourseValueViewSet)
 
 urlpatterns = [
+    # Static web page
     url(r'^$', TemplateView.as_view(template_name='index.html'), name='home'),
+    # rest api
     url(r'^api/', include(router.urls)),
-    url(r'^admin/', include(admin.site.urls)),
     url(r'^api/token-auth/', obtain_auth_token),
+    # django admin
+    url(r'^admin/', include(admin.site.urls)),
+    # django admin chaining combos
+    url(r'^chaining/', include('smart_selects.urls')), 
 ]
