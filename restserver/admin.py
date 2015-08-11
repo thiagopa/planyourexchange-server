@@ -52,7 +52,7 @@ class SchoolAdmin(ShowIconBaseAdminModel):
 admin.site.register(Country,ShowIconBaseAdminModel)
 admin.site.register(City,ShowIconBaseAdminModel)
 admin.site.register(Course,ShowIconBaseAdminModel)
-admin.site.register(School,ShowIconBaseAdminModel)
+admin.site.register(School,SchoolAdmin)
 admin.site.register(SchoolCourseValue,SchoolCourseValueModelAdmin)
 admin.site.register(State)
 admin.site.register(CostOfLiving)
