@@ -50,7 +50,7 @@ class SchoolCourseValueModelAdmin(admin.ModelAdmin):
 class SchoolAdmin(ShowIconBaseAdminModel):
     fieldsets = (
         (None, {
-            'fields' : ('name','icon')
+            'fields' : ('name','icon','icon_display')
         }),
         ('Address',{
             'fields' : ('address_line','suburb','zip_code','country','state','city')
