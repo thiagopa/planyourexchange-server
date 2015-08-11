@@ -20,7 +20,6 @@ from restserver.fields import MoneyField
 from rest_framework import serializers
 
 class CountrySerializer(serializers.ModelSerializer):
-    
     visa_fee = MoneyField()
     
     class Meta:
@@ -46,7 +45,7 @@ class SchoolSerializer(serializers.ModelSerializer):
 class SchoolCourseValueSerializer(serializers.ModelSerializer):
     school = SchoolSerializer(read_only=True)
     course = CourseSerializer(read_only=True)
-    week_price = serializers.ReadOnlyField(source='week_price.amount')
+    week_price = MoneyField()
     
     class Meta:
         model = SchoolCourseValue

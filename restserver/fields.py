@@ -20,7 +20,7 @@ from rest_framework import serializers
 from djmoney.models.fields import MoneyField
 from moneyed import Money
 
-class MoneyField(serializer.Field):
+class MoneyField(serializers.Field):
     """
         Representation of money with value and default currency
         that would be changed automatically by the country's default
