@@ -50,13 +50,13 @@ class SchoolCourseValueModelAdmin(admin.ModelAdmin):
 class SchoolAdmin(ShowIconBaseAdminModel):
     fieldsets = (
         (None, {
-            'fields' : ('name','icon','icon_display')
+            'fields' : ('name','icon','icon_display',)
         }),
         ('Address',{
-            'fields' : ('address_line','suburb','zip_code','country','state','city')
+            'fields' : ('address_line','suburb','zip_code','country','state','city',)
         }),
         ('Fees',{
-            'fields' : ('enrolment_fee','books_fee')
+            'fields' : ('enrolment_fee','books_fee',)
         }),
     )
     
@@ -79,20 +79,20 @@ class HealthInsuranceModelAdmin(admin.ModelAdmin):
 # Grouping different type of quotes
 @admin.register(CostOfLiving)
 class CostOfLivingModelAdmin(admin.ModelAdmin):
-    list_display = ('name','state','country',)
+    list_display = ('city','state','country',)
     
     fieldsets = (
         (None, {
-            'fields' : ('country','state','city')
+            'fields' : ('country','state','city',)
         }),
         ('Food',{
-            'fields' : ('restaurant_average_per_meal','super_market_average_per_month')
+            'fields' : ('restaurant_average_per_meal','super_market_average_per_month',)
         }),
         ('Transport',{
-            'fields' : ('public_transport_monthly')
+            'fields' : ('public_transport_monthly',)
         }),
         ('Housing',{
-            'fields' : ('rent_average_monthly','utilites_average_monthly')
+            'fields' : ('rent_average_monthly','utilites_average_monthly',)
         }),
 
     )
