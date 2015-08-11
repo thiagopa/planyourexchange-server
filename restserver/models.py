@@ -62,6 +62,10 @@ class Address(models.Model):
     line = models.CharField(max_length=255)
     suburb = models.CharField(max_length=50)
     zip_code = models.IntegerField()
+    
+    class Meta:
+        verbose_name_plural = "Addresses"
+
 
 # Schools that are available    
 class School(AbstractModel):
@@ -97,6 +101,10 @@ class CostOfLiving(models.Model):
     rent_average_monthly = MoneyField(max_digits=10, decimal_places=2)
     # utilites
     utilites_average_monthly = MoneyField(max_digits=10, decimal_places=2)
+    
+    class Meta:
+        verbose_name_plural = "Costs of Living"
+
 
 # Health Insurrance Providers per country
 class HealthInsurrance(models.Model) :
