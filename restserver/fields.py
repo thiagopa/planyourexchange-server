@@ -26,7 +26,7 @@ class MoneyField(serializers.Field):
         that would be changed automatically by the country's default
     """
     def to_representation(self, obj):
-        return "%.2f" % (obj.amount)
+        return obj.amount
 
     def to_internal_value(self, data):
         amount = smart_text(data).strip()

@@ -127,17 +127,6 @@ class CostOfLiving(models.Model):
     
     class Meta:
         verbose_name_plural = "Costs of Living"
-        
-    # Save default value for currencies
-    def save(self, *args, **kwargs):
-        
-        self.restaurant_average_per_meal_currency = self.country.default_currency
-        self.super_market_average_per_month_currency = self.country.default_currency
-        self.rent_average_monthly_currency = self.country.default_currency
-        self.utilites_average_monthly_currency = self.country.default_currency
-
-        super(CostOfLiving,self).save(*args, **kwargs)
-
 
 class HealthInsurrance(models.Model) :
     """
@@ -152,16 +141,6 @@ class HealthInsurrance(models.Model) :
     single_price_per_month = MoneyField(max_digits=10, decimal_places=2)
     couple_price_per_month = MoneyField(max_digits=10, decimal_places=2)
     familly_price_per_month = MoneyField(max_digits=10, decimal_places=2)
-    
-    # Save default value for currencies
-    def save(self, *args, **kwargs):
-        
-        self.single_price_per_month_currency = self.country.default_currency
-        self.couple_price_per_month_currency = self.country.default_currency
-        self.familly_price_per_month_currency = self.country.default_currency
-        
-        super(HealthInsurrance,self).save(*args, **kwargs)
-
     
 # Generate token for user authentication
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)

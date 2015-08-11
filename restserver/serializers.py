@@ -25,8 +25,13 @@ class CountrySerializer(serializers.ModelSerializer):
     class Meta:
         model = Country
 
+class StateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = State
+
 class CitySerializer(serializers.ModelSerializer):
     country = CountrySerializer(read_only=True)
+    state = StateSerializer(read_only=True)
     
     class Meta:
         model = City
@@ -37,6 +42,9 @@ class CourseSerializer(serializers.ModelSerializer):
 
 class SchoolSerializer(serializers.ModelSerializer):
     city = CitySerializer(read_only=True)
+    
+    enrolment_fee = MoneyField()
+    books_fee = MoneyField()
     
     class Meta:
         model = School
@@ -55,3 +63,25 @@ class SchoolCourseValueFinderSerializer(serializers.Serializer):
     city_id = serializers.IntegerField()
     course_id = serializers.IntegerField(required = False)
     school_id = serializers.IntegerField(required = False)
+    
+class CostOfLivingSerializer(serializers.ModelSerializer):
+    city = CitySerializer(read_only=True)
+
+    restaurant_average_per_meal = MoneyField()
+    super_market_average_per_month = MoneyField() 
+    public_transport_monthly = MoneyField()
+    rent_average_monthly = MoneyField()
+    utilites_average_monthly = MoneyField()
+    
+    class Meta:
+        model = CostOfLiving
+
+class HealthInsurranceSerializer(serializers.ModelSerializer):
+    country = CountrySerializer(read_only=True)
+    
+    single_price_per_month = MoneyField()
+    couple_price_per_month = MoneyField()
+    familly_price_per_month = MoneyField()
+
+    class Meta:
+        model = HealthInsurrance

@@ -32,6 +32,10 @@ class CountryViewSet(viewsets.ModelViewSet):
         serializer = CitySerializer(queryset, many=True)
         return Response(serializer.data)
     
+    @detail_rote()
+    def healthinsurances(self,request,pk=None):
+        
+    
 class CityViewSet(viewsets.ModelViewSet):
     queryset = City.objects.all()
     serializer_class = CitySerializer
