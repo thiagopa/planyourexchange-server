@@ -47,6 +47,10 @@ class State(models.Model):
     country = models.ForeignKey(Country) 
     name = models.CharField(max_length=255)
     abreviation = models.CharField(max_length=5)
+    
+    def __str__(self):
+        return self.abreviation
+
 
 # Cities available in each country
 class City(AbstractModel): 
