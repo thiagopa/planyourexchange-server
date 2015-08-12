@@ -15,26 +15,16 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 """
-from rest_framework.test import APITestCase
 from rest_framework import status
-from django.contrib.auth.models import User
 from nose.tools import raises
 from restserver.models import Country
+from tests.test_utils import AuthenticatedTest, GenericTests
 import json
 
-class AuthenticatedTest(APITestCase):
+class CountriesTest(AuthenticatedTest,GenericTests):
     """
-        Creates and Authenticate a test user using the api
-        Loads default fixture data for other objects
+        Test all api calls related to Countries 
     """
-    fixtures = ['restserver_testdata.json']
-    
-    def setUp(self):
-        self.superuser = User.objects.create_superuser('testuser', 'test@planyourexchange.com', 'testpassword')
-        response = self.client.post('/api/token-auth/', {'username' : 'testuser', 'password' : 'testpassword' })
-        self.client.credentials(HTTP_AUTHORIZATION='Token ' + json.loads(response.content)['token'])
-        
-class CountriesTest(AuthenticatedTest):
     
     def test_create_country(self):
         with open('tests/test_icon.png') as test_icon:
@@ -56,10 +46,7 @@ class CountriesTest(AuthenticatedTest):
         self.assertEquals(response.data['id'],1)
     
     def test_list_countries(self):
-        response = self.client.get('/api/countries/')
-        
-        self.assertEquals(response.status_code,status.HTTP_200_OK)
-        self.assertTrue(len(response.data) > 0, 'No countries listed')
+        self.generic_list('/api/countries/','No countries listed')
     
     @raises(Country.DoesNotExist)        
     def test_delete_country(self):

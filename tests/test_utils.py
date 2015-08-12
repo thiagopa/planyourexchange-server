@@ -16,6 +16,9 @@
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 """
 from inmemorystorage import InMemoryStorage
+from rest_framework.test import APITestCase
+from django.contrib.auth.models import User
+from rest_framework import status
 
 class TestStorage(InMemoryStorage):
     """
@@ -24,14 +27,25 @@ class TestStorage(InMemoryStorage):
     def url(self, name):
         return name
 
-class DisableMigrations(object):
+class AuthenticatedTest(APITestCase):
     """
-        Disable Migrations
+        Creates and Authenticate a test user using the api
+        Loads default fixture data for other objects
     """
+    fixtures = ['restserver_testdata.json']
+    
+    def setUp(self):
+        self.superuser = User.objects.create_superuser('testuser', 'test@planyourexchange.com', 'testpassword')
+        response = self.client.post('/api/token-auth/', {'username' : 'testuser', 'password' : 'testpassword' })
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + json.loads(response.content)['token'])
 
-    def __contains__(self, item):
-        return True
-
-    def __getitem__(self, item):
-        return "notmigrations"
+class GenericTests:
+    def generic_list(self,url):
+        """
+            Verify calls that need to return a list of objects
+        """
+        response = self.client.get(url,message)
+        
+        self.assertEquals(response.status_code,status.HTTP_200_OK)
+        self.assertTrue(len(response.data) > 0, message)
         
