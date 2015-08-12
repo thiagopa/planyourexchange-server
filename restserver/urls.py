@@ -26,9 +26,8 @@ from rest_framework.authtoken.views import obtain_auth_token
 router = routers.DefaultRouter()
 router.register(r'countries',views.CountryViewSet)
 router.register(r'cities',views.CityViewSet)
-router.register(r'courses',views.CourseViewSet)
-router.register(r'schools',views.SchoolViewSet)
 router.register(r'schoolcoursevalue',views.SchoolCourseValueViewSet)
+
 
 urlpatterns = [
     # Static web page
