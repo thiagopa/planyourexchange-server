@@ -16,6 +16,7 @@ Uses heroku environment to store production access and keys
 
 But can easily be run with a local database
 
+runtests.py are basically all api calls being tested isolating only rest componenets (uses database fixtures and inmemory storages)
 
 ## License
 
