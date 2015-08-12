@@ -342,7 +342,7 @@
         "company_name": "Bupa",
         "single_price_per_month": "45.00"
     },
-    "model": "restserver.healthinsurrance",
+    "model": "restserver.healthinsurance",
     "pk": 1
 }
 ]

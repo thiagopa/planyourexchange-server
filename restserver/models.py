@@ -128,9 +128,9 @@ class CostOfLiving(models.Model):
     class Meta:
         verbose_name_plural = "Costs of Living"
 
-class HealthInsurrance(models.Model) :
+class HealthInsurance(models.Model) :
     """
-        Health Insurrance Providers per country
+        Health Insurance Providers per country
     """
     country = models.ForeignKey(Country)
     

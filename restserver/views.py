@@ -33,11 +33,11 @@ class CountryViewSet(viewsets.ModelViewSet):
         return self.generic_data_load(City,CitySerializer)
         
     @detail_route()
-    def healthinsurrances(self,request,pk=None):
+    def healthinsurances(self,request,pk=None):
         """
         Load Health Insurances per Country
         """
-        return self.generic_data_load(HealthInsurrance,HealthInsurranceSerializer)
+        return self.generic_data_load(HealthInsurance,HealthInsuranceSerializer)
     
     def generic_data_load(self,model,serializer_class):
         queryset = model.objects.filter(country=self.get_object())

@@ -67,8 +67,8 @@ class CountriesTest(BaseTest):
     def test_list_cities(self):
         self.generic_list('/api/countries/1/cities/','No cities found for Australia')
 
-    def test_list_healthinsurrances(self):
-        self.generic_list('/api/countries/1/healthinsurrances/','No Health Insurrances found for Australia')
+    def test_list_healthinsurances(self):
+        self.generic_list('/api/countries/1/healthinsurances/','No Health Insurances found for Australia')
 
 
 class CitiesTest(BaseTest):

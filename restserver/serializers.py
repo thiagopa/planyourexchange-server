@@ -80,7 +80,7 @@ class CostOfLivingSerializer(serializers.ModelSerializer):
         # They're already being rendered inside city object 
         exclude = ('country','state')
 
-class HealthInsurranceSerializer(serializers.ModelSerializer):
+class HealthInsuranceSerializer(serializers.ModelSerializer):
     country = CountrySerializer(read_only=True)
     
     single_price_per_month = MoneyField()
@@ -88,4 +88,4 @@ class HealthInsurranceSerializer(serializers.ModelSerializer):
     familly_price_per_month = MoneyField()
 
     class Meta:
-        model = HealthInsurrance
+        model = HealthInsurance

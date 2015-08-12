@@ -81,7 +81,7 @@ class CountryAdmin(ShowIconBaseAdminModel):
     ]    
 
 # HealthInsurrance with Country List
-@admin.register(HealthInsurrance)
+@admin.register(HealthInsurance)
 class HealthInsuranceModelAdmin(admin.ModelAdmin):
     list_display = ('company_name','country',)
 
