@@ -56,6 +56,12 @@ class CityViewSet(viewsets.ModelViewSet):
     def schools(self,request,pk=None):
         return self.generic_data_load(SchoolSerializer,lambda scv: scv.school)
     
+    @detail_route()
+    def costofliving(self,request,pk=None):
+        queryset = CostOfLiving.objects.filter(city=self.get_object())
+        serializer = CostOfLivingSerializer(queryset[0])
+        return Response(serializer.data)
+    
     def generic_data_load(self,serializer_class,query_object):
         """
              Transfer all schools/courses from relationship to serializer

@@ -80,6 +80,12 @@ class CitiesTest(BaseTest):
         
     def test_list_schools(self):
         self.generic_list('/api/cities/2/schools/','No Schools found in Sydney')
+        
+    def test_list_cost_of_living(self):
+        response = self.client.get('/api/cities/2/costofliving/')
+        
+        self.assertEquals(response.status_code,status.HTTP_200_OK)
+        self.assertEquals(response.data['city']['id'],2)
 
 class SchoolCourseValueTest(BaseTest):
     """

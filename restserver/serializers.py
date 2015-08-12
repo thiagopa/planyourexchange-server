@@ -77,6 +77,8 @@ class CostOfLivingSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = CostOfLiving
+        # They're already being rendered inside city object 
+        exclude = ('country','state')
 
 class HealthInsurranceSerializer(serializers.ModelSerializer):
     country = CountrySerializer(read_only=True)

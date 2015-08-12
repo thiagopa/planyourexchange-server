@@ -28,7 +28,6 @@ router.register(r'countries',views.CountryViewSet)
 router.register(r'cities',views.CityViewSet)
 router.register(r'schoolcoursevalue',views.SchoolCourseValueViewSet)
 
-
 urlpatterns = [
     # Static web page
     url(r'^$', TemplateView.as_view(template_name='index.html'), name='home'),
