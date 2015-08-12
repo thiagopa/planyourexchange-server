@@ -59,7 +59,7 @@ INSTALLED_APPS = (
     # for rest api for token auth
     'rest_framework.authtoken',
     # for django admin chained combos
-    'smart_selects',
+    #'smart_selects',
     # my beloved app =^.^=
     'restserver',
 )
