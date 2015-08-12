@@ -59,7 +59,7 @@ INSTALLED_APPS = (
     # for rest api for token auth
     'rest_framework.authtoken',
     # for django admin chained combos
-    #'smart_selects',
+    'smart_selects',
     # my beloved app =^.^=
     'restserver',
 )
@@ -165,6 +165,9 @@ REST_FRAMEWORK = {
         'rest_framework.renderers.JSONRenderer',
     ],
 }
+
+USE_DJANGO_JQUERY = False
+JQUERY_URL='http://code.jquery.com/jquery-2.1.4.min.js'
 
 # Load local settings for development environment
 try:
