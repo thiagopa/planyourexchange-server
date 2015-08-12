@@ -8,6 +8,7 @@ dj-database-url==0.3.0
 dj-static==0.0.6
 django-admin-bootstrapped==2.5.4
 django-filter==0.10.0
+django-inmemorystorage==0.1.1
 django-money==0.7.0
 django-postgrespool==0.3.0
 django-smart-selects==1.1.1

@@ -15,20 +15,10 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 """
-from rest_framework.test import APIRequestFactory
 from rest_framework.test import APITestCase
 from rest_framework import status
 from django.contrib.auth.models import User
-from django.core.files.uploadedfile import SimpleUploadedFile
-from django.test.client import encode_multipart
-from django.core.files.storage import Storage
-import json, mock
-
-
-# Mocks the default storage api
-storage_mock = mock.MagicMock(spec=Storage, name='StorageMock')
-storage_mock.url = mock.MagicMock(name='url')
-storage_mock.url.return_value = '/tmp/test_icon.png'
+import json
 
 class AuthenticatedTest(APITestCase):
     """
@@ -41,9 +31,7 @@ class AuthenticatedTest(APITestCase):
         
 class CountriesTest(AuthenticatedTest):
     
-    #@mock.patch('__builtin__.open')
-    @mock.patch('django.core.files.storage.default_storage._wrapped', new_callable=storage_mock)
-    def test_create_country(self,mock_class):
+    def test_create_country(self):
         with open('restserver/test_icon.png') as test_icon:
             data = {
                     'name' : 'Australia',

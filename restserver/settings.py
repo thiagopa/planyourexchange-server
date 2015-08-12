@@ -166,6 +166,9 @@ REST_FRAMEWORK = {
     ],
 }
 
+# Custom Test Runner
+TEST_RUNNER = 'restserver.test_runner.FastTestRunner'
+
 # Load local settings for development environment
 try:
     from local_settings import *
