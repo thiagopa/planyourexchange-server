@@ -32,7 +32,7 @@ class AuthenticatedTest(APITestCase):
 class CountriesTest(AuthenticatedTest):
     
     def test_create_country(self):
-        with open('restserver/test_icon.png') as test_icon:
+        with open('tests/test_icon.png') as test_icon:
             data = {
                     'name' : 'Australia',
                     'icon' : test_icon,
