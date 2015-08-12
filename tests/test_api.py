@@ -18,10 +18,9 @@
 from rest_framework import status
 from nose.tools import raises
 from restserver.models import Country
-from tests.test_utils import AuthenticatedTest, GenericTests
-import json
+from test_utils import BaseTest
 
-class CountriesTest(AuthenticatedTest,GenericTests):
+class CountriesTest(BaseTest):
     """
         Test all api calls related to Countries 
     """
@@ -67,9 +66,8 @@ class CountriesTest(AuthenticatedTest,GenericTests):
         self.assertEquals(country.visa_fee.amount, 1850.0)
     
     def test_list_cities(self):
-        response = self.client.get('/api/countries/1/cities/')
-        
-        self.assertEquals(response.status_code,status.HTTP_200_OK)
-        self.assertTrue(len(response.data) > 0, 'No cities listed')
-        
+        self.generic_list('/api/countries/1/cities/','No cities listed')
+
+    def test_list_healthinsurrances(self):
+        self.generic_list('/api/countries/1/healthinsurrances/','No Health Insurrances listed')
             

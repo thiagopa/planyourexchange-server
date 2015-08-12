@@ -27,24 +27,24 @@ class TestStorage(InMemoryStorage):
     def url(self, name):
         return name
 
-class AuthenticatedTest(APITestCase):
+class BaseTest(APITestCase):
     """
         Creates and Authenticate a test user using the api
         Loads default fixture data for other objects
+        Common methods to extract information
     """
     fixtures = ['restserver_testdata.json']
     
     def setUp(self):
         self.superuser = User.objects.create_superuser('testuser', 'test@planyourexchange.com', 'testpassword')
         response = self.client.post('/api/token-auth/', {'username' : 'testuser', 'password' : 'testpassword' })
-        self.client.credentials(HTTP_AUTHORIZATION='Token ' + json.loads(response.content)['token'])
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + response.data['token'])
 
-class GenericTests:
-    def generic_list(self,url):
+    def generic_list(self,url,message):
         """
             Verify calls that need to return a list of objects
         """
-        response = self.client.get(url,message)
+        response = self.client.get(url)
         
         self.assertEquals(response.status_code,status.HTTP_200_OK)
         self.assertTrue(len(response.data) > 0, message)
