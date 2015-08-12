@@ -15,21 +15,23 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 """
-# from restserver.settings import *
+from test.test_utils import DisableMigrations
+# Mocking default S3 storage for tests with inmemory storage because it's faster
+DEFAULT_FILE_STORAGE = 'tests.test_utils.TestStorage'
 
-DEFAULT_FILE_STORAGE = 'tests.test_storage.TestStorage'
-
+# Faster password hasher for creating test users
 PASSWORD_HASHERS = (
     'django.contrib.auth.hashers.MD5PasswordHasher',
 )
 
+# Faster inmemory database
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3', 
     }
 }
 
-# Application definition
+# Loading only what is relevant to tests, so the app loads faster
 INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -40,6 +42,7 @@ INSTALLED_APPS = (
 
 SECRET_KEY='TEST_KEY'
 
+# Mirror rest framework basic configuration for tests
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.TokenAuthentication',
@@ -51,12 +54,5 @@ REST_FRAMEWORK = {
 
 ROOT_URLCONF = 'restserver.urls'
 
-class DisableMigrations(object):
-
-    def __contains__(self, item):
-        return True
-
-    def __getitem__(self, item):
-        return "notmigrations"
-    
+# Disabling migrations for faster tests
 MIGRATION_MODULES = DisableMigrations()

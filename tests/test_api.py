@@ -25,15 +25,16 @@ import json
 class AuthenticatedTest(APITestCase):
     """
         Creates and Authenticate a test user using the api
+        Loads default fixture data for other objects
     """
+    fixtures = ['restserver_testdata.json']
+    
     def setUp(self):
         self.superuser = User.objects.create_superuser('testuser', 'test@planyourexchange.com', 'testpassword')
         response = self.client.post('/api/token-auth/', {'username' : 'testuser', 'password' : 'testpassword' })
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + json.loads(response.content)['token'])
         
 class CountriesTest(AuthenticatedTest):
-    
-    fixtures = ['restserver_testdata.json']
     
     def test_create_country(self):
         with open('tests/test_icon.png') as test_icon:
@@ -67,3 +68,15 @@ class CountriesTest(AuthenticatedTest):
         
         country = Country.objects.get(pk=1)
         
+    def test_update_country_visa_fee(self):
+        data = {
+                    'visa_fee' : 1850.0
+        }
+        
+        response = self.client.patch('/api/countries/1/', data)
+        self.assertEquals(response.status_code,status.HTTP_200_OK)
+        
+        country = Country.objects.get(pk=1)
+        self.assertEquals(country.visa_fee.amount, 1850.0)
+    
+            

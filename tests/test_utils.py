@@ -22,5 +22,16 @@ class TestStorage(InMemoryStorage):
         Addressing NotImplementedException Issues
     """
     def url(self, name):
-        return '/mocked/%s' % (name)
+        return name
+
+class DisableMigrations(object):
+    """
+        Disable Migrations
+    """
+
+    def __contains__(self, item):
+        return True
+
+    def __getitem__(self, item):
+        return "notmigrations"
         

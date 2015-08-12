@@ -18,6 +18,7 @@
 from restserver.models import *
 from rest_framework import serializers
 from djmoney.models.fields import MoneyField
+from django.utils.encoding import smart_text
 from moneyed import Money
 
 class MoneyField(serializers.Field):
