@@ -48,7 +48,7 @@ class SchoolSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = School
-        # They're already being rendered inside city object
+        # They're already being rendered inside city object 
         exclude = ('country','state')
 
 # Custom Serializer for weekly price of courses by school
