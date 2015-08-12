@@ -15,22 +15,12 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 """
-from restserver.settings import *
+from inmemorystorage import InMemoryStorage
 
-DEFAULT_FILE_STORAGE = 'tests.test_storage.TestStorage'
-
-PASSWORD_HASHERS = (
-    'django.contrib.auth.hashers.MD5PasswordHasher',
-)
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3', 
-        'NAME': 'my_db',                      
-        'USER': '',                      
-        'PASSWORD': '',                  
-        'HOST': '',                      
-        'PORT': '',                      
-    }
-}
-
+class TestStorage(InMemoryStorage):
+    """
+        Addressing NotImplementedException Issues
+    """
+    def url(self, name):
+        return '/mocked/%s' % (name)
+        
