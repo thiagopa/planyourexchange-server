@@ -15,7 +15,6 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 """
-from test.test_utils import DisableMigrations
 # Mocking default S3 storage for tests with inmemory storage because it's faster
 DEFAULT_FILE_STORAGE = 'tests.test_utils.TestStorage'
 
@@ -55,4 +54,15 @@ REST_FRAMEWORK = {
 ROOT_URLCONF = 'restserver.urls'
 
 # Disabling migrations for faster tests
+class DisableMigrations(object):
+    """
+        Disable Migrations
+    """
+
+    def __contains__(self, item):
+        return True
+
+    def __getitem__(self, item):
+        return "notmigrations"
+        
 MIGRATION_MODULES = DisableMigrations()

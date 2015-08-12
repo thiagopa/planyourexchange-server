@@ -68,9 +68,9 @@ class CountriesTest(AuthenticatedTest):
         
         country = Country.objects.get(pk=1)
         
-    def test_update_country_visa_fee(self):
+    def test_update_visa_fee(self):
         data = {
-                    'visa_fee' : 1850.0
+            'visa_fee' : 1850.0
         }
         
         response = self.client.patch('/api/countries/1/', data)
@@ -79,4 +79,10 @@ class CountriesTest(AuthenticatedTest):
         country = Country.objects.get(pk=1)
         self.assertEquals(country.visa_fee.amount, 1850.0)
     
+    def test_list_cities(self):
+        response = self.client.get('/api/countries/1/cities/')
+        
+        self.assertEquals(response.status_code,status.HTTP_200_OK)
+        self.assertTrue(len(response.data) > 0, 'No cities listed')
+        
             
