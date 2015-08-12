@@ -15,7 +15,7 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 """
-from restserver.settings import *
+# from restserver.settings import *
 
 DEFAULT_FILE_STORAGE = 'tests.test_storage.TestStorage'
 
@@ -26,11 +26,37 @@ PASSWORD_HASHERS = (
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3', 
-        'NAME': 'my_db',                      
-        'USER': '',                      
-        'PASSWORD': '',                  
-        'HOST': '',                      
-        'PORT': '',                      
     }
 }
 
+# Application definition
+INSTALLED_APPS = (
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'rest_framework',
+    'rest_framework.authtoken',
+    'restserver',
+)
+
+SECRET_KEY='TEST_KEY'
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ],
+    'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.JSONRenderer',
+    ],
+}
+
+ROOT_URLCONF = 'restserver.urls'
+
+class DisableMigrations(object):
+
+    def __contains__(self, item):
+        return True
+
+    def __getitem__(self, item):
+        return "notmigrations"
+    
+MIGRATION_MODULES = DisableMigrations()

@@ -15,15 +15,17 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 """
-from rest_framework.test import APITestCase
+from rest_framework.test import APITransactionTestCase
 from rest_framework import status
 from django.contrib.auth.models import User
 import json
 
-class AuthenticatedTest(APITestCase):
+class AuthenticatedTest(APITransactionTestCase):
     """
         Creates and Authenticate a test user using the api
     """
+    available_apps = ('django.contrib.auth','restserver',)
+    
     def setUp(self):
         self.superuser = User.objects.create_superuser('testuser', 'test@planyourexchange.com', 'testpassword')
         response = self.client.post('/api/token-auth/', {'username' : 'testuser', 'password' : 'testpassword' })
@@ -42,12 +44,12 @@ class CountriesTest(AuthenticatedTest):
         
             response = self.client.post('/api/countries/', data, 'multipart')
         
-            print response
-        
-            self.assertEquals(response.status_code,status.HTTP_200_OK)
+            self.assertEquals(response.status_code,status.HTTP_201_CREATED)
     
     def test_list_countries(self):
         response = self.client.get('/api/countries/')
+        
+        print response
         
         self.assertEquals(response.status_code,status.HTTP_200_OK)
         self.assertTrue(response.content, 'No countries listed')
