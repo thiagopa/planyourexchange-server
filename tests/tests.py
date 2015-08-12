@@ -15,23 +15,25 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 """
-from rest_framework.test import APITransactionTestCase
+from rest_framework.test import APITestCase
 from rest_framework import status
 from django.contrib.auth.models import User
+from nose.tools import raises
+from restserver.models import Country
 import json
 
-class AuthenticatedTest(APITransactionTestCase):
+class AuthenticatedTest(APITestCase):
     """
         Creates and Authenticate a test user using the api
     """
-    available_apps = ('django.contrib.auth','restserver',)
-    
     def setUp(self):
         self.superuser = User.objects.create_superuser('testuser', 'test@planyourexchange.com', 'testpassword')
         response = self.client.post('/api/token-auth/', {'username' : 'testuser', 'password' : 'testpassword' })
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + json.loads(response.content)['token'])
         
 class CountriesTest(AuthenticatedTest):
+    
+    fixtures = ['restserver_testdata.json']
     
     def test_create_country(self):
         with open('tests/test_icon.png') as test_icon:
@@ -43,17 +45,25 @@ class CountriesTest(AuthenticatedTest):
             } 
         
             response = self.client.post('/api/countries/', data, 'multipart')
-        
+            
             self.assertEquals(response.status_code,status.HTTP_201_CREATED)
+
+    def test_get_country(self):
+        response = self.client.get('/api/countries/1/')
+        
+        self.assertEquals(response.status_code,status.HTTP_200_OK)
+        self.assertEquals(response.data['id'],1)
     
     def test_list_countries(self):
         response = self.client.get('/api/countries/')
         
-        print response
-        
         self.assertEquals(response.status_code,status.HTTP_200_OK)
-        self.assertTrue(response.content, 'No countries listed')
-
-# Using the standard RequestFactory API
-#factory = APIRequestFactory()
-#request = factory.get('/countries/')
+        self.assertTrue(len(response.data) > 0, 'No countries listed')
+    
+    @raises(Country.DoesNotExist)        
+    def test_delete_country(self):
+        response = self.client.delete('/api/countries/1/')
+        self.assertEquals(response.status_code,status.HTTP_204_NO_CONTENT)
+        
+        country = Country.objects.get(pk=1)
+        

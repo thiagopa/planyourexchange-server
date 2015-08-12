@@ -1,0 +1,348 @@
+[
+{
+    "fields": {
+        "name": "Australia",
+        "icon": "icons/220px-Flag_of_Australia.svg.png"
+    },
+    "model": "restserver.abstractmodel",
+    "pk": 1
+},
+{
+    "fields": {
+        "name": "Sydney",
+        "icon": "icons/220px-Sydney_skyline_at_dusk_-_Dec_2008.jpg"
+    },
+    "model": "restserver.abstractmodel",
+    "pk": 2
+},
+{
+    "fields": {
+        "name": "General English",
+        "icon": "icons/general-english-4-180287-l-48x48.png"
+    },
+    "model": "restserver.abstractmodel",
+    "pk": 3
+},
+{
+    "fields": {
+        "name": "Greenwich English College",
+        "icon": "icons/greenwich.png"
+    },
+    "model": "restserver.abstractmodel",
+    "pk": 4
+},
+{
+    "fields": {
+        "name": "Melbourne",
+        "icon": "icons/220px-Melbourne_Night_Panorama.jpg"
+    },
+    "model": "restserver.abstractmodel",
+    "pk": 5
+},
+{
+    "fields": {
+        "name": "Ireland",
+        "icon": "icons/220px-Flag_of_Ireland.svg.png"
+    },
+    "model": "restserver.abstractmodel",
+    "pk": 6
+},
+{
+    "fields": {
+        "name": "Canada",
+        "icon": "icons/220px-Flag_of_Canada.svg.png"
+    },
+    "model": "restserver.abstractmodel",
+    "pk": 7
+},
+{
+    "fields": {
+        "name": "United Kingdom",
+        "icon": "icons/220px-Flag_of_the_United_Kingdom.svg.png"
+    },
+    "model": "restserver.abstractmodel",
+    "pk": 8
+},
+{
+    "fields": {
+        "name": "United States",
+        "icon": "icons/220px-Flag_of_the_United_States.svg.png"
+    },
+    "model": "restserver.abstractmodel",
+    "pk": 9
+},
+{
+    "fields": {
+        "name": "Dublin",
+        "icon": "icons/220x-dublin-castle.jpg"
+    },
+    "model": "restserver.abstractmodel",
+    "pk": 10
+},
+{
+    "fields": {
+        "name": "CAE",
+        "icon": "icons/220px-cae.jpg"
+    },
+    "model": "restserver.abstractmodel",
+    "pk": 11
+},
+{
+    "fields": {
+        "name": "Kaplan International",
+        "icon": "icons/220px-kaplan.png"
+    },
+    "model": "restserver.abstractmodel",
+    "pk": 12
+},
+{
+    "fields": {
+        "name": "South Africa",
+        "icon": "icons/218px-Flag_of_South_Africa.svg.png"
+    },
+    "model": "restserver.abstractmodel",
+    "pk": 13
+},
+{
+    "fields": {
+        "name": "New Zealand",
+        "icon": "icons/220px-Flag_of_New_Zealand.svg.png"
+    },
+    "model": "restserver.abstractmodel",
+    "pk": 14
+},
+{
+    "fields": {
+        "visa_fee_currency": "AUD",
+        "visa_fee": "550.00",
+        "default_currency": "AUD"
+    },
+    "model": "restserver.country",
+    "pk": 1
+},
+{
+    "fields": {
+        "visa_fee_currency": "EUR",
+        "visa_fee": "1.00",
+        "default_currency": "EUR"
+    },
+    "model": "restserver.country",
+    "pk": 6
+},
+{
+    "fields": {
+        "visa_fee_currency": "CAD",
+        "visa_fee": "1.00",
+        "default_currency": "CAD"
+    },
+    "model": "restserver.country",
+    "pk": 7
+},
+{
+    "fields": {
+        "visa_fee_currency": "GBP",
+        "visa_fee": "1.00",
+        "default_currency": "GBP"
+    },
+    "model": "restserver.country",
+    "pk": 8
+},
+{
+    "fields": {
+        "visa_fee_currency": "USD",
+        "visa_fee": "1.00",
+        "default_currency": "USD"
+    },
+    "model": "restserver.country",
+    "pk": 9
+},
+{
+    "fields": {
+        "visa_fee_currency": "ZAR",
+        "visa_fee": "1.00",
+        "default_currency": "ZAR"
+    },
+    "model": "restserver.country",
+    "pk": 13
+},
+{
+    "fields": {
+        "visa_fee_currency": "NZD",
+        "visa_fee": "1.00",
+        "default_currency": "NZD"
+    },
+    "model": "restserver.country",
+    "pk": 14
+},
+{
+    "fields": {
+        "country": 1,
+        "name": "Default State",
+        "abreviation": "DFS"
+    },
+    "model": "restserver.state",
+    "pk": 1
+},
+{
+    "fields": {
+        "country": 1,
+        "name": "Victoria",
+        "abreviation": "VIC"
+    },
+    "model": "restserver.state",
+    "pk": 2
+},
+{
+    "fields": {
+        "country": 1,
+        "name": "New South Wales",
+        "abreviation": "NSW"
+    },
+    "model": "restserver.state",
+    "pk": 3
+},
+{
+    "fields": {
+        "country": 1,
+        "state": 3
+    },
+    "model": "restserver.city",
+    "pk": 2
+},
+{
+    "fields": {
+        "country": 1,
+        "state": 1
+    },
+    "model": "restserver.city",
+    "pk": 5
+},
+{
+    "fields": {
+        "country": 6,
+        "state": 1
+    },
+    "model": "restserver.city",
+    "pk": 10
+},
+{
+    "fields": {
+        "week_duration": 50
+    },
+    "model": "restserver.course",
+    "pk": 3
+},
+{
+    "fields": {
+        "week_duration": 18
+    },
+    "model": "restserver.course",
+    "pk": 11
+},
+{
+    "fields": {
+        "enrolment_fee": "0.00",
+        "city": 5,
+        "enrolment_fee_currency": "AFN",
+        "country": 1,
+        "books_fee": "0.00",
+        "suburb": "City",
+        "state": 1,
+        "books_fee_currency": "AFN",
+        "address_line": "L",
+        "zip_code": 1
+    },
+    "model": "restserver.school",
+    "pk": 4
+},
+{
+    "fields": {
+        "enrolment_fee": "1.00",
+        "city": 2,
+        "enrolment_fee_currency": "AUD",
+        "country": 1,
+        "books_fee": "1.00",
+        "suburb": "City Circle",
+        "state": 3,
+        "books_fee_currency": "AUD",
+        "address_line": "72 Market Street",
+        "zip_code": 2010
+    },
+    "model": "restserver.school",
+    "pk": 12
+},
+{
+    "fields": {
+        "week_price": "260.00",
+        "course": 3,
+        "school": 4,
+        "week_price_currency": "AUD"
+    },
+    "model": "restserver.schoolcoursevalue",
+    "pk": 1
+},
+{
+    "fields": {
+        "week_price": "220.00",
+        "course": 11,
+        "school": 4,
+        "week_price_currency": "AUD"
+    },
+    "model": "restserver.schoolcoursevalue",
+    "pk": 2
+},
+{
+    "fields": {
+        "week_price": "235.00",
+        "course": 3,
+        "school": 12,
+        "week_price_currency": "AUD"
+    },
+    "model": "restserver.schoolcoursevalue",
+    "pk": 3
+},
+{
+    "fields": {
+        "week_price": "225.00",
+        "course": 11,
+        "school": 12,
+        "week_price_currency": "AUD"
+    },
+    "model": "restserver.schoolcoursevalue",
+    "pk": 4
+},
+{
+    "fields": {
+        "utilites_average_monthly": "0.00",
+        "city": 2,
+        "public_transport_monthly": "0.00",
+        "super_market_average_per_month_currency": "AFN",
+        "country": 1,
+        "restaurant_average_per_meal": "0.00",
+        "utilites_average_monthly_currency": "AFN",
+        "super_market_average_per_month": "0.00",
+        "state": 3,
+        "rent_average_monthly_currency": "AFN",
+        "restaurant_average_per_meal_currency": "AFN",
+        "public_transport_monthly_currency": "AFN",
+        "rent_average_monthly": "0.00"
+    },
+    "model": "restserver.costofliving",
+    "pk": 1
+},
+{
+    "fields": {
+        "single_price_per_month_currency": "AFN",
+        "country": 1,
+        "couple_price_per_month_currency": "AFN",
+        "familly_price_per_month": "0.00",
+        "couple_price_per_month": "0.00",
+        "company_website": "huehue",
+        "familly_price_per_month_currency": "AFN",
+        "company_name": "HueHue",
+        "single_price_per_month": "0.00"
+    },
+    "model": "restserver.healthinsurrance",
+    "pk": 1
+}
+]
