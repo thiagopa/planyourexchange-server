@@ -178,7 +178,7 @@
     "fields": {
         "country": 1,
         "name": "Default State",
-        "abreviation": "DFS"
+        "abbreviation": "DFS"
     },
     "model": "restserver.state",
     "pk": 1
@@ -187,7 +187,7 @@
     "fields": {
         "country": 1,
         "name": "Victoria",
-        "abreviation": "VIC"
+        "abbreviation": "VIC"
     },
     "model": "restserver.state",
     "pk": 2
@@ -196,7 +196,7 @@
     "fields": {
         "country": 1,
         "name": "New South Wales",
-        "abreviation": "NSW"
+        "abbreviation": "NSW"
     },
     "model": "restserver.state",
     "pk": 3
