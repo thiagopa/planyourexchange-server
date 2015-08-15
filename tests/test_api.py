@@ -62,7 +62,7 @@ class CountriesTest(BaseTest):
         self.assertEquals(response.status_code,status.HTTP_200_OK)
         
         country = Country.objects.get(pk=1)
-        self.assertEquals(country.visa_fee.amount, 1850.0)
+        self.assertEquals(country.visa_fee, 1850.0)
     
     def test_list_cities(self):
         self.generic_list('/api/countries/1/cities/','No cities found for Australia')
