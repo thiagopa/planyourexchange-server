@@ -96,6 +96,15 @@ class HealthInsuranceModelAdmin(DefaultCurrencyAdminModel,ShowIconBaseAdminModel
     readonly_fields = ('icon_display','default_currency')
     
     list_display = ('name','country',)
+    
+    fieldsets = (
+        (None, {
+            'fields' : ('name','icon','icon_display','country','website')
+        }),
+        ('Prices', {
+            'fields' : ('default_currency','single_price_per_month','couple_price_per_month','familly_price_per_month')
+        }),
+    )
 
 # Grouping different type of quotes
 @admin.register(CostOfLiving)
