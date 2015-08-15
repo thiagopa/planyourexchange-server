@@ -47,7 +47,7 @@ class SchoolSerializer(serializers.ModelSerializer):
 class SchoolCourseValueSerializer(serializers.ModelSerializer):
     class Meta:
         model = SchoolCourseValue
-        depth = 1
+        depth = 3
 
 # Serializer for find parameters
 class SchoolCourseValueFinderSerializer(serializers.Serializer):
