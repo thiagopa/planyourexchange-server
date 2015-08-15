@@ -262,36 +262,48 @@
 },
 {
     "fields": {
+        "city": 2,
+        "school": 4,
+        "country": 1,
         "week_price": "260.00",
         "course": 3,
-        "school": 4
+        "state": 1
     },
     "model": "restserver.schoolcoursevalue",
     "pk": 1
 },
 {
     "fields": {
+        "city": 2,
+        "school": 4,
+        "country": 1,
         "week_price": "220.00",
         "course": 11,
-        "school": 4
+        "state": 1
     },
     "model": "restserver.schoolcoursevalue",
     "pk": 2
 },
 {
     "fields": {
+        "city": 2,
+        "school": 12,
+        "country": 1,
         "week_price": "235.00",
         "course": 3,
-        "school": 12
+        "state": 1
     },
     "model": "restserver.schoolcoursevalue",
     "pk": 3
 },
 {
     "fields": {
+        "city": 2,
+        "school": 12,
+        "country": 1,
         "week_price": "225.00",
         "course": 11,
-        "school": 12
+        "state": 1
     },
     "model": "restserver.schoolcoursevalue",
     "pk": 4

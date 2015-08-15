@@ -36,27 +36,37 @@ class ShowIconBaseAdminModel(admin.ModelAdmin):
 class CityModelAdmin(ShowIconBaseAdminModel):
     list_display = ('name','state','country',)
 
-# Customizing display for values
-@admin.register(SchoolCourseValue)
-class SchoolCourseValueModelAdmin(admin.ModelAdmin):
-    list_display = ('course','school','week_price', 'currency',)
-
-    def currency(self,instance):
-        return instance.week_price.currency
-    
-    currency.short_description = 'Currency'
-    currency.admin_order_field = 'week_price_currency'
-
 # Default Currency
-class DefaultCurrencyAdminModel(ShowIconBaseAdminModel):
-    readonly_fields = ('icon_display','default_currency')
+class DefaultCurrencyAdminModel(admin.ModelAdmin):
+    readonly_fields = ('default_currency',)
     
     def default_currency(self,instance):
         return CURRENCIES[instance.country.default_currency].name
+    
+    default_currency.description = 'Default Currency'
+
+# Customizing display for values
+@admin.register(SchoolCourseValue)
+class SchoolCourseValueModelAdmin(DefaultCurrencyAdminModel):
+    list_display = ('course','school','week_price', 'default_currency',)
+
+    fieldsets = (
+        ('Course', {
+            'fields' : ('course',)
+        }),
+        ('School',{
+            'fields' : ('country','state','city','school',)
+        }),
+        ('Price',{
+            'fields' : ('default_currency','week_price',)
+        }),
+    )
 
 # Address being edited inside School organized by fieldsets
 @admin.register(School)
-class SchoolAdmin(DefaultCurrencyAdminModel):
+class SchoolAdmin(DefaultCurrencyAdminModel,ShowIconBaseAdminModel):
+    
+    readonly_fields = ('icon_display','default_currency')
     
     fieldsets = (
         (None, {
@@ -82,17 +92,20 @@ class CountryAdmin(ShowIconBaseAdminModel):
 
 # HealthInsurrance with Country List
 @admin.register(HealthInsurance)
-class HealthInsuranceModelAdmin(admin.ModelAdmin):
+class HealthInsuranceModelAdmin(DefaultCurrencyAdminModel,ShowIconBaseAdminModel):
+    readonly_fields = ('icon_display','default_currency')
+    
     list_display = ('name','country',)
 
 # Grouping different type of quotes
 @admin.register(CostOfLiving)
-class CostOfLivingModelAdmin(admin.ModelAdmin):
+class CostOfLivingModelAdmin(DefaultCurrencyAdminModel):
+
     list_display = ('city','state','country',)
     
     fieldsets = (
         (None, {
-            'fields' : ('country','state','city',)
+            'fields' : ('country','state','city','default_currency')
         }),
         ('Food',{
             'fields' : ('restaurant_average_per_meal','super_market_average_per_month',)

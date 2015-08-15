@@ -94,7 +94,13 @@ class School(AbstractModel):
 # How much does a course costs in a specific school     
 class SchoolCourseValue(models.Model):
     course = models.ForeignKey(Course)
-    school = models.ForeignKey(School)
+    
+    # Chaining the school selection all the way up to country,state and city
+    country = models.ForeignKey(Country)
+    state = ChainedForeignKey(State, chained_field="country", chained_model_field="country")
+    city = ChainedForeignKey(City, chained_field="state", chained_model_field="state")
+    school = ChainedForeignKey(School, chained_field="city", chained_model_field="city")
+    
     week_price = models.DecimalField(max_digits=10, decimal_places=2)
     
     def __str__(self):
