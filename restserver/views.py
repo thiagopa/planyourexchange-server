@@ -59,8 +59,12 @@ class CityViewSet(viewsets.ModelViewSet):
     @detail_route()
     def costofliving(self,request,pk=None):
         queryset = CostOfLiving.objects.filter(city=self.get_object())
-        serializer = CostOfLivingSerializer(queryset[0])
-        return Response(serializer.data)
+        if queryset.exists():
+            serializer = CostOfLivingSerializer(queryset.first())
+            return Response(serializer.data)
+        else :
+            return Response('No data could be found',
+                            status=status.HTTP_404_NOT_FOUND)
     
     def generic_data_load(self,serializer_class,query_object):
         """
@@ -68,8 +72,13 @@ class CityViewSet(viewsets.ModelViewSet):
              Because it comes duplicated, use set to only show unique results
         """
         queryset = SchoolCourseValue.objects.filter(school__city=self.get_object())
-        serializer = serializer_class(set([query_object(scv) for scv in queryset]), many=True)
-        return Response(serializer.data)
+        if queryset.exists():
+            serializer = serializer_class(set([query_object(scv) for scv in queryset]), many=True)
+            return Response(serializer.data)
+        else :
+            return Response('No data could be found',
+                            status=status.HTTP_404_NOT_FOUND)
+
         
 class SchoolCourseValueViewSet(viewsets.ModelViewSet):
     queryset = SchoolCourseValue.objects.all()

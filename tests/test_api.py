@@ -86,7 +86,7 @@ class CitiesTest(BaseTest):
         
         self.assertEquals(response.status_code,status.HTTP_200_OK)
         self.assertEquals(response.data['city']['id'],2)
-
+        
 class SchoolCourseValueTest(BaseTest):
     """
         Test finder filter for prices based on the school and the course
