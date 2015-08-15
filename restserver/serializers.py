@@ -41,7 +41,7 @@ class SchoolSerializer(serializers.ModelSerializer):
         model = School
         # They're already being rendered inside city object 
         exclude = ('country','state')
-        depth = 1
+        depth = 2
 
 # Custom Serializer for weekly price of courses by school
 class SchoolCourseValueSerializer(serializers.ModelSerializer):
@@ -60,7 +60,7 @@ class CostOfLivingSerializer(serializers.ModelSerializer):
         model = CostOfLiving
         # They're already being rendered inside city object 
         exclude = ('country','state')
-        depth = 1
+        depth = 2
 
 class HealthInsuranceSerializer(serializers.ModelSerializer):
     class Meta:

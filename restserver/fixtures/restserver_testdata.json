@@ -113,6 +113,14 @@
 },
 {
     "fields": {
+        "name": "Bupa",
+        "icon": "icons/bupa.gif"
+    },
+    "model": "restserver.abstractmodel",
+    "pk": 15
+},
+{
+    "fields": {
         "visa_fee": "550.00",
         "default_currency": "AUD"
     },
@@ -267,7 +275,7 @@
         "country": 1,
         "week_price": "260.00",
         "course": 3,
-        "state": 1
+        "state": 2
     },
     "model": "restserver.schoolcoursevalue",
     "pk": 1
@@ -279,7 +287,7 @@
         "country": 1,
         "week_price": "220.00",
         "course": 11,
-        "state": 1
+        "state": 2
     },
     "model": "restserver.schoolcoursevalue",
     "pk": 2
@@ -291,7 +299,7 @@
         "country": 1,
         "week_price": "235.00",
         "course": 3,
-        "state": 1
+        "state": 2
     },
     "model": "restserver.schoolcoursevalue",
     "pk": 3
@@ -303,7 +311,7 @@
         "country": 1,
         "week_price": "225.00",
         "course": 11,
-        "state": 1
+        "state": 2
     },
     "model": "restserver.schoolcoursevalue",
     "pk": 4
@@ -321,5 +329,16 @@
     },
     "model": "restserver.costofliving",
     "pk": 1
+},
+{
+    "fields": {
+        "website": "http://www.bupa.com.au",
+        "country": 1,
+        "couple_price_per_month": "200.00",
+        "familly_price_per_month": "220.00",
+        "single_price_per_month": "45.00"
+    },
+    "model": "restserver.healthinsurance",
+    "pk": 15
 }
 ]
