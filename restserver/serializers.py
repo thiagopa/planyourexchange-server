@@ -20,8 +20,6 @@ from restserver.fields import MoneyField
 from rest_framework import serializers
 
 class CountrySerializer(serializers.ModelSerializer):
-    visa_fee = MoneyField()
-    
     class Meta:
         model = Country
 
@@ -30,35 +28,26 @@ class StateSerializer(serializers.ModelSerializer):
         model = State
 
 class CitySerializer(serializers.ModelSerializer):
-    country = CountrySerializer(read_only=True)
-    state = StateSerializer(read_only=True)
-    
     class Meta:
         model = City
+        depth = 1
 
 class CourseSerializer(serializers.ModelSerializer):
     class Meta:
         model = Course
 
 class SchoolSerializer(serializers.ModelSerializer):
-    city = CitySerializer(read_only=True)
-    
-    enrolment_fee = MoneyField()
-    books_fee = MoneyField()
-    
     class Meta:
         model = School
         # They're already being rendered inside city object 
         exclude = ('country','state')
+        depth = 1
 
 # Custom Serializer for weekly price of courses by school
 class SchoolCourseValueSerializer(serializers.ModelSerializer):
-    school = SchoolSerializer(read_only=True)
-    course = CourseSerializer(read_only=True)
-    week_price = MoneyField()
-    
     class Meta:
         model = SchoolCourseValue
+        depth = 1
 
 # Serializer for find parameters
 class SchoolCourseValueFinderSerializer(serializers.Serializer):
@@ -67,25 +56,13 @@ class SchoolCourseValueFinderSerializer(serializers.Serializer):
     school_id = serializers.IntegerField(required = False)
     
 class CostOfLivingSerializer(serializers.ModelSerializer):
-    city = CitySerializer(read_only=True)
-
-    restaurant_average_per_meal = MoneyField()
-    super_market_average_per_month = MoneyField() 
-    public_transport_monthly = MoneyField()
-    rent_average_monthly = MoneyField()
-    utilites_average_monthly = MoneyField()
-    
     class Meta:
         model = CostOfLiving
         # They're already being rendered inside city object 
         exclude = ('country','state')
+        depth = 1
 
 class HealthInsuranceSerializer(serializers.ModelSerializer):
-    country = CountrySerializer(read_only=True)
-    
-    single_price_per_month = MoneyField()
-    couple_price_per_month = MoneyField()
-    familly_price_per_month = MoneyField()
-
     class Meta:
         model = HealthInsurance
+        depth = 1

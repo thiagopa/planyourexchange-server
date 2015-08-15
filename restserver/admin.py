@@ -83,7 +83,7 @@ class CountryAdmin(ShowIconBaseAdminModel):
 # HealthInsurrance with Country List
 @admin.register(HealthInsurance)
 class HealthInsuranceModelAdmin(admin.ModelAdmin):
-    list_display = ('company_name','country',)
+    list_display = ('name','country',)
 
 # Grouping different type of quotes
 @admin.register(CostOfLiving)

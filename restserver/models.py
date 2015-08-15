@@ -16,14 +16,12 @@
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 """
 from django.db import models
-from djmoney.models.fields import MoneyField
 from djmoney.forms.widgets import CURRENCY_CHOICES
 from django.conf import settings
-from django.db.models.signals import post_save, pre_save
 from django.dispatch import receiver
+from django.db.models.signals import post_save
 from rest_framework.authtoken.models import Token
 from smart_selects.db_fields import ChainedForeignKey 
-import moneyed
 
 class AbstractModel(models.Model):
     """
@@ -39,7 +37,7 @@ class Country(AbstractModel):
     """
         Countries available to do exchange 
     """
-    visa_fee = MoneyField(max_digits=10, decimal_places=2)
+    visa_fee = models.DecimalField(max_digits=10, decimal_places=2)
     default_currency = models.CharField(max_length=3, choices=CURRENCY_CHOICES)
 
     class Meta:
@@ -86,8 +84,8 @@ class School(AbstractModel):
     state = ChainedForeignKey(State, chained_field="country", chained_model_field="country")
     city = ChainedForeignKey(City, chained_field="state", chained_model_field="state")
     # fees
-    enrolment_fee = MoneyField(max_digits=10, decimal_places=2)
-    books_fee = MoneyField(max_digits=10, decimal_places=2)
+    enrolment_fee = models.DecimalField(max_digits=10, decimal_places=2)
+    books_fee = models.DecimalField(max_digits=10, decimal_places=2)
     # address
     address_line = models.CharField(max_length=255)
     suburb = models.CharField(max_length=50)
@@ -97,7 +95,7 @@ class School(AbstractModel):
 class SchoolCourseValue(models.Model):
     course = models.ForeignKey(Course)
     school = models.ForeignKey(School)
-    week_price = MoneyField(max_digits=10, decimal_places=2)
+    week_price = models.DecimalField(max_digits=10, decimal_places=2)
     
     def __str__(self):
         return '%s at %s costs %s per week' % (self.course,self.school,self.week_price)
@@ -115,50 +113,33 @@ class CostOfLiving(models.Model):
     city = ChainedForeignKey(City, chained_field="state", chained_model_field="state")
     
     # per meal
-    restaurant_average_per_meal = MoneyField(verbose_name="Average meal in Restaurant",max_digits=10, decimal_places=2)
+    restaurant_average_per_meal = models.DecimalField(verbose_name="Average meal in Restaurant",max_digits=10, decimal_places=2)
     # per month
-    super_market_average_per_month = MoneyField(verbose_name="Average Supermarket per Month", max_digits=10, decimal_places=2) 
+    super_market_average_per_month = models.DecimalField(verbose_name="Average Supermarket per Month", max_digits=10, decimal_places=2) 
     
-    public_transport_monthly = MoneyField(verbose_name="Monthly Public Transport ticket",max_digits=10, decimal_places=2)
+    public_transport_monthly = models.DecimalField(verbose_name="Monthly Public Transport ticket",max_digits=10, decimal_places=2)
     # no shareroom
-    rent_average_monthly = MoneyField(verbose_name="Average Rent per Month",max_digits=10, decimal_places=2)
+    rent_average_monthly = models.DecimalField(verbose_name="Average Rent per Month",max_digits=10, decimal_places=2)
     # utilites
-    utilites_average_monthly = MoneyField(verbose_name="Average Utilites per Month",max_digits=10, decimal_places=2)
+    utilites_average_monthly = models.DecimalField(verbose_name="Average Utilites per Month",max_digits=10, decimal_places=2)
     
     class Meta:
         verbose_name_plural = "Costs of Living"
 
-class HealthInsurance(models.Model) :
+class HealthInsurance(AbstractModel) :
     """
         Health Insurance Providers per country
     """
     country = models.ForeignKey(Country)
-    
-    company_name = models.CharField(max_length=255)
-    company_website = models.CharField(max_length=255)
+    website = models.URLField()
     
     # per month
-    single_price_per_month = MoneyField(max_digits=10, decimal_places=2)
-    couple_price_per_month = MoneyField(max_digits=10, decimal_places=2)
-    familly_price_per_month = MoneyField(max_digits=10, decimal_places=2)
+    single_price_per_month = models.DecimalField(max_digits=10, decimal_places=2)
+    couple_price_per_month = models.DecimalField(max_digits=10, decimal_places=2)
+    familly_price_per_month = models.DecimalField(max_digits=10, decimal_places=2)
     
 # Generate token for user authentication
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)
 def create_auth_token(sender, instance=None, created=False, **kwargs):
     if created:
         Token.objects.create(user=instance)
-
-# Used to save all currencies with the default country
-@receiver(pre_save)
-def default_currency(sender, instance, *args, **kwargs):
-    default_currency = None
-    
-    if hasattr(instance,'country_id'):
-        default_currency = instance.country.default_currency
-    elif hasattr(instance,'default_currency'):
-        default_currency = instance.default_currency
-    
-    if default_currency:
-        for attr in dir(instance):
-            if attr.endswith('currency'):
-                setattr(instance,attr,default_currency)

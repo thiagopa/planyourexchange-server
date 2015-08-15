@@ -1,0 +1,3 @@
+Using this commands frequently :
+
+python manage.py dumpdata restserver --indent=4 > restserver/fixtures/restserver_testdata.json

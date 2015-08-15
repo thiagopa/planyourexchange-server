@@ -113,7 +113,6 @@
 },
 {
     "fields": {
-        "visa_fee_currency": "AUD",
         "visa_fee": "550.00",
         "default_currency": "AUD"
     },
@@ -122,7 +121,6 @@
 },
 {
     "fields": {
-        "visa_fee_currency": "EUR",
         "visa_fee": "1.00",
         "default_currency": "EUR"
     },
@@ -131,7 +129,6 @@
 },
 {
     "fields": {
-        "visa_fee_currency": "CAD",
         "visa_fee": "1.00",
         "default_currency": "CAD"
     },
@@ -140,7 +137,6 @@
 },
 {
     "fields": {
-        "visa_fee_currency": "GBP",
         "visa_fee": "1.00",
         "default_currency": "GBP"
     },
@@ -149,7 +145,6 @@
 },
 {
     "fields": {
-        "visa_fee_currency": "USD",
         "visa_fee": "1.00",
         "default_currency": "USD"
     },
@@ -158,7 +153,6 @@
 },
 {
     "fields": {
-        "visa_fee_currency": "ZAR",
         "visa_fee": "1.00",
         "default_currency": "ZAR"
     },
@@ -167,7 +161,6 @@
 },
 {
     "fields": {
-        "visa_fee_currency": "NZD",
         "visa_fee": "1.00",
         "default_currency": "NZD"
     },
@@ -176,27 +169,27 @@
 },
 {
     "fields": {
+        "abbreviation": "DFS",
         "country": 1,
-        "name": "Default State",
-        "abbreviation": "DFS"
+        "name": "Default State"
     },
     "model": "restserver.state",
     "pk": 1
 },
 {
     "fields": {
+        "abbreviation": "VIC",
         "country": 1,
-        "name": "Victoria",
-        "abbreviation": "VIC"
+        "name": "Victoria"
     },
     "model": "restserver.state",
     "pk": 2
 },
 {
     "fields": {
+        "abbreviation": "NSW",
         "country": 1,
-        "name": "New South Wales",
-        "abbreviation": "NSW"
+        "name": "New South Wales"
     },
     "model": "restserver.state",
     "pk": 3
@@ -243,12 +236,10 @@
     "fields": {
         "enrolment_fee": "55.00",
         "city": 2,
-        "enrolment_fee_currency": "AUD",
         "country": 1,
         "books_fee": "320.00",
         "suburb": "City",
         "state": 2,
-        "books_fee_currency": "AUD",
         "address_line": "333 Pitt Street",
         "zip_code": 2010
     },
@@ -259,12 +250,10 @@
     "fields": {
         "enrolment_fee": "250.00",
         "city": 2,
-        "enrolment_fee_currency": "AUD",
         "country": 1,
         "books_fee": "250.00",
         "suburb": "City Circle",
         "state": 2,
-        "books_fee_currency": "AUD",
         "address_line": "7 Market Street",
         "zip_code": 2010
     },
@@ -275,8 +264,7 @@
     "fields": {
         "week_price": "260.00",
         "course": 3,
-        "school": 4,
-        "week_price_currency": "AUD"
+        "school": 4
     },
     "model": "restserver.schoolcoursevalue",
     "pk": 1
@@ -285,8 +273,7 @@
     "fields": {
         "week_price": "220.00",
         "course": 11,
-        "school": 4,
-        "week_price_currency": "AUD"
+        "school": 4
     },
     "model": "restserver.schoolcoursevalue",
     "pk": 2
@@ -295,8 +282,7 @@
     "fields": {
         "week_price": "235.00",
         "course": 3,
-        "school": 12,
-        "week_price_currency": "AUD"
+        "school": 12
     },
     "model": "restserver.schoolcoursevalue",
     "pk": 3
@@ -305,44 +291,23 @@
     "fields": {
         "week_price": "225.00",
         "course": 11,
-        "school": 12,
-        "week_price_currency": "AUD"
+        "school": 12
     },
     "model": "restserver.schoolcoursevalue",
     "pk": 4
 },
 {
     "fields": {
-        "utilites_average_monthly": "120.00",
         "city": 2,
         "public_transport_monthly": "150.00",
-        "super_market_average_per_month_currency": "AUD",
         "country": 1,
         "restaurant_average_per_meal": "12.00",
-        "utilites_average_monthly_currency": "AUD",
         "super_market_average_per_month": "200.00",
         "state": 2,
-        "rent_average_monthly_currency": "AUD",
-        "restaurant_average_per_meal_currency": "AUD",
-        "public_transport_monthly_currency": "AUD",
+        "utilites_average_monthly": "120.00",
         "rent_average_monthly": "1200.00"
     },
     "model": "restserver.costofliving",
-    "pk": 1
-},
-{
-    "fields": {
-        "single_price_per_month_currency": "AUD",
-        "country": 1,
-        "couple_price_per_month_currency": "AUD",
-        "familly_price_per_month": "220.00",
-        "couple_price_per_month": "200.00",
-        "company_website": "www.bupa.com.au",
-        "familly_price_per_month_currency": "AUD",
-        "company_name": "Bupa",
-        "single_price_per_month": "45.00"
-    },
-    "model": "restserver.healthinsurance",
     "pk": 1
 }
 ]
