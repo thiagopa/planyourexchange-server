@@ -197,10 +197,6 @@ class AirFare(models.Model):
                 stops.append(trips.destination)
         return stops
 
-    def __str__(self):
-        return '%s, %s to %s , duration: %s, stops: %s' % (self.price,self.origin,self.destination,self.total_duration(),self.stops())
-
-    
 # Generate token for user authentication
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)
 def create_auth_token(sender, instance=None, created=False, **kwargs):
