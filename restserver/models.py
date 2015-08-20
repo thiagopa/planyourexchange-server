@@ -68,6 +68,8 @@ class City(AbstractModel):
         show_all=False, 
         auto_choose=True)
     
+    airport = models.CharField(max_length=3) 
+    
     class Meta:
         verbose_name_plural = "Cities"
 
@@ -76,6 +78,8 @@ class Course(AbstractModel):
         Courses that are available to study
     """
     week_duration = models.IntegerField()
+    is_flexible = models.BooleanField(default=False)
+    
 
 class School(AbstractModel):
     """
@@ -184,6 +188,10 @@ class AirFare(models.Model):
         super(AirFare,self).save( *args, **kwargs)
 
     def total_duration(self):
+        """
+            Total duration from all trips
+            Sums all flight and airport connection durations
+        """
         trips_duration = [(lambda x,y : x + y)(t.flight_duration,t.airport_layover) for t in self.air_trips.all()]
         return sum(trips_duration,timedelta())
 
