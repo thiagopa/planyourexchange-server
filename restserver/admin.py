@@ -127,3 +127,5 @@ class CostOfLivingModelAdmin(DefaultCurrencyAdminModel):
         }),
 
     )
+
+admin.site.register(AirFare)
