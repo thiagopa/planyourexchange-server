@@ -130,16 +130,16 @@ class CostOfLivingModelAdmin(DefaultCurrencyAdminModel):
 
 @admin.register(AirFare)
 class AirFareModelAdmin(admin.ModelAdmin):
-    list_display = ('price','origin','destination','total_duration','stops')
-
+    list_display = ('price','origin','destination','stops') #,'total_duration','stops')
+    """
     def total_duration(self,instance):
         return instance.total_duration()
     
     total_duration.description = 'Total Duration'
-    
     def stops(self,instance):
         return instance.stops()
     
     stops.description = 'Stops'
+    """    
 
 admin.site.register(AirTrip)

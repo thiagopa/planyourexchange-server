@@ -189,13 +189,10 @@ class AirFare(models.Model):
         return total_duration
 
     def stops(self):
-        stops = []
-        for trip in self.air_trips.all() :
-            if trip.origin != self.origin :
-                stops.append(trips.origin) 
-            if trip.destination != self.destination :
-                stops.append(trips.destination)
-        return stops
+        s = []
+        [(lambda x,y : [s.append(x), s.append(y)]) (t.origin,t.destination) for t in self.air_trips.all() if t.origin != self.origin and t.destination != self.destination] 
+        s = list(set(s))
+        return s
 
 # Generate token for user authentication
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)
