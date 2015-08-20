@@ -22,6 +22,7 @@ from django.dispatch import receiver
 from django.db.models.signals import post_save
 from rest_framework.authtoken.models import Token
 from smart_selects.db_fields import ChainedForeignKey 
+from djmoney.models.fields import MoneyField
 
 class AbstractModel(models.Model):
     """
@@ -143,6 +144,41 @@ class HealthInsurance(AbstractModel) :
     single_price_per_month = models.DecimalField(max_digits=10, decimal_places=2)
     couple_price_per_month = models.DecimalField(max_digits=10, decimal_places=2)
     familly_price_per_month = models.DecimalField(max_digits=10, decimal_places=2)
+
+class AirTrip(models.Model):
+    """
+        Represents a trip that would ultimetily lead to final destination
+    """
+    operated_by = models.CharField()
+    
+    origin = models.CharField(max_length=3)
+    destination = models.CharField(max_length=3)
+
+    flight_duration = models.DurationField()
+    
+    airport_layover = models.DurationField()
+
+
+class AirFare(modes.Model):
+    """
+        AirFare object represents a "cached" air fare
+    """
+    date = models.DateField()
+    
+    origin = models.CharField(max_length=3)
+    destination = models.CharField(max_length=3)
+    
+    price = MoneyField(max_digits=10, decimal_places=2, default_currency='USD') 
+    
+    air_trips = models.ManyToManyField(AirTrip)
+    
+    def save(self, *args, **kwargs):
+        """
+            Overriding origin and desination to uppercase
+        """
+        self.origin = self.origin.upper()
+        self.destination = self.destination.upper()
+        super(AirFare,self).save( *args, **kwargs)
     
 # Generate token for user authentication
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)
