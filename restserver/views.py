@@ -20,7 +20,7 @@ from restserver.serializers import *
 from restserver.models import *
 from rest_framework.response import Response
 from rest_framework.decorators import detail_route, list_route
-from django_filters import filters
+from rest_framework.filters import DjangoFilterBackend
 
 class CountryViewSet(viewsets.ModelViewSet):
     queryset = Country.objects.all()
@@ -112,6 +112,6 @@ class SchoolCourseValueViewSet(viewsets.ModelViewSet):
 class AirFareViewSet(viewsets.ModelViewSet):
      queryset = AirFare.objects.all()
      serializer_class = AirFareSerializer
-     filter_backends = (filters.DjangoFilterBackend,)
+     filter_backends = (DjangoFilterBackend,)
      filter_fields = ('origin','destination')
      

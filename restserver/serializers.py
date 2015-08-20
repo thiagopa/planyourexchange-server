@@ -23,10 +23,6 @@ class CountrySerializer(serializers.ModelSerializer):
     class Meta:
         model = Country
 
-class StateSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = State
-
 class CitySerializer(serializers.ModelSerializer):
     class Meta:
         model = City
