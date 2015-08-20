@@ -161,7 +161,7 @@ class AirTrip(models.Model):
 
     flight_duration = models.DurationField()
     
-    airport_layover = models.DurationField(null=True, blank=True)
+    airport_layover = models.DurationField(blank=True, default=timedelta())
     
     def __str__(self):
         return '%s to %s operated by %s' % (self.origin,self.destination,self.operated_by)
