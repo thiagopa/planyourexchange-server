@@ -159,7 +159,7 @@ class AirTrip(models.Model):
     airport_layover = models.DurationField()
 
 
-class AirFare(modes.Model):
+class AirFare(models.Model):
     """
         AirFare object represents a "cached" air fare
     """
