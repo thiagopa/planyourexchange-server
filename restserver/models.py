@@ -149,7 +149,7 @@ class AirTrip(models.Model):
     """
         Represents a trip that would ultimetily lead to final destination
     """
-    operated_by = models.CharField()
+    operated_by = models.CharField(max_length=255)
     
     origin = models.CharField(max_length=3)
     destination = models.CharField(max_length=3)
