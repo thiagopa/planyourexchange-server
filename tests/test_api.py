@@ -121,4 +121,6 @@ class SchoolCourseValueTest(BaseTest):
         self.assertEquals(response.status_code,status.HTTP_200_OK)
         self.assertTrue(len(response.data) > 0, 'No values found for school or course in this city')
 
-
+class AirFareTest(BaseTest):
+    def test_gru_syd(self):
+        self.generic_list('/api/airfares/?origin=GRU&destination=SYD','No airfares for GRU to SYD')

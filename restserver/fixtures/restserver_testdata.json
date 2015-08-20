@@ -205,7 +205,8 @@
 {
     "fields": {
         "country": 1,
-        "state": 2
+        "state": 2,
+        "airport": "SYD"
     },
     "model": "restserver.city",
     "pk": 2
@@ -213,7 +214,8 @@
 {
     "fields": {
         "country": 1,
-        "state": 3
+        "state": 3,
+        "airport": "SYD"
     },
     "model": "restserver.city",
     "pk": 5
@@ -221,13 +223,15 @@
 {
     "fields": {
         "country": 6,
-        "state": 1
+        "state": 1,
+        "airport": "SYD"
     },
     "model": "restserver.city",
     "pk": 10
 },
 {
     "fields": {
+        "is_flexible": false,
         "week_duration": 50
     },
     "model": "restserver.course",
@@ -235,6 +239,7 @@
 },
 {
     "fields": {
+        "is_flexible": false,
         "week_duration": 18
     },
     "model": "restserver.course",
@@ -340,5 +345,54 @@
     },
     "model": "restserver.healthinsurance",
     "pk": 15
+},
+{
+    "fields": {
+        "origin": "GRU",
+        "flight_duration": "04:25:00",
+        "destination": "SCL",
+        "airport_layover": "06:55:00",
+        "operated_by": "TAM"
+    },
+    "model": "restserver.airtrip",
+    "pk": 1
+},
+{
+    "fields": {
+        "origin": "SCL",
+        "flight_duration": "13:10:00",
+        "destination": "AKL",
+        "airport_layover": "02:00:00",
+        "operated_by": "LAN"
+    },
+    "model": "restserver.airtrip",
+    "pk": 2
+},
+{
+    "fields": {
+        "origin": "AKL",
+        "flight_duration": "03:40:00",
+        "destination": "SYD",
+        "airport_layover": "00:00:00",
+        "operated_by": "LAN"
+    },
+    "model": "restserver.airtrip",
+    "pk": 3
+},
+{
+    "fields": {
+        "origin": "GRU",
+        "price_currency": "BRL",
+        "air_trips": [
+            1,
+            2,
+            3
+        ],
+        "price": "5918.00",
+        "destination": "SYD",
+        "date": "2015-08-20"
+    },
+    "model": "restserver.airfare",
+    "pk": 1
 }
 ]

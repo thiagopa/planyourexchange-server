@@ -64,6 +64,9 @@ class HealthInsuranceSerializer(serializers.ModelSerializer):
         depth = 1
 
 class AirFareSerializer(serializers.ModelSerializer):
+    
+    price = MoneyField()
+    
     class Meta:
         model = AirFare
         depth = 1
