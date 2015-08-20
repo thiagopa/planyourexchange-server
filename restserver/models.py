@@ -156,8 +156,10 @@ class AirTrip(models.Model):
 
     flight_duration = models.DurationField()
     
-    airport_layover = models.DurationField()
-
+    airport_layover = models.DurationField(null=True, blank=True)
+    
+    def __str__(self):
+        return '%s to %s operated by %s' % (self.origin,self.destination,self.operated_by)
 
 class AirFare(models.Model):
     """
@@ -179,6 +181,25 @@ class AirFare(models.Model):
         self.origin = self.origin.upper()
         self.destination = self.destination.upper()
         super(AirFare,self).save( *args, **kwargs)
+
+    def total_duration(self):
+        for trip in self.air_trips.all() :
+            total_duration = total_duration + trip.flight_duration
+            total_duration = total_duration + trip.airport_layover
+        return total_duration
+
+    def stops(self):
+        stops = []
+        for trip in self.air_trips.all() :
+            if trip.origin != self.origin :
+                stops.append(trips.origin) 
+            if trip.destination != self.destination :
+                stops.append(trips.destination)
+        return stops
+
+    def __str__(self):
+        return '%s, %s to %s , duration: %s, stops: %s' % (self.price,self.origin,self.destination,self.total_duration(),self.stops())
+
     
 # Generate token for user authentication
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)
