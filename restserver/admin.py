@@ -129,3 +129,4 @@ class CostOfLivingModelAdmin(DefaultCurrencyAdminModel):
     )
 
 admin.site.register(AirFare)
+admin.site.register(AirTrip)
