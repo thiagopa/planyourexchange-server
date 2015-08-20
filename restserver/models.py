@@ -183,12 +183,14 @@ class AirFare(models.Model):
         super(AirFare,self).save( *args, **kwargs)
 
     def total_duration(self):
-        for trip in self.air_trips.all() :
-            total_duration = total_duration + trip.flight_duration
-            total_duration = total_duration + trip.airport_layover
-        return total_duration
+        return [(lambda x,y : x + y)(t.flight_duration,t.airport_layover) for t in self.air_trips.all()]
 
     def stops(self):
+        """
+            Should only show intermediate airports, excluding origin and destination
+            First append origin and destination to a list if they're not the origin and destination already
+            Last remove duplicates
+        """
         s = []
         [(lambda x,y : [s.append(x), s.append(y)]) (t.origin,t.destination) for t in self.air_trips.all() if t.origin != self.origin and t.destination != self.destination] 
         s = list(set(s))
