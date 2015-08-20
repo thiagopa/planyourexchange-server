@@ -66,3 +66,8 @@ class HealthInsuranceSerializer(serializers.ModelSerializer):
     class Meta:
         model = HealthInsurance
         depth = 1
+
+class AirFareSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = AirFare
+        depth = 1

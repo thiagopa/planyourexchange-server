@@ -27,6 +27,7 @@ router = routers.DefaultRouter()
 router.register(r'countries',views.CountryViewSet)
 router.register(r'cities',views.CityViewSet)
 router.register(r'schoolcoursevalue',views.SchoolCourseValueViewSet)
+router.register(r'airfares',views.AirFareViewSet)
 
 urlpatterns = [
     # Static web page
