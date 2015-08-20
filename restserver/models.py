@@ -23,6 +23,7 @@ from django.db.models.signals import post_save
 from rest_framework.authtoken.models import Token
 from smart_selects.db_fields import ChainedForeignKey 
 from djmoney.models.fields import MoneyField
+from datetime import timedelta
 
 class AbstractModel(models.Model):
     """
@@ -183,7 +184,8 @@ class AirFare(models.Model):
         super(AirFare,self).save( *args, **kwargs)
 
     def total_duration(self):
-        return [(lambda x,y : x + y)(t.flight_duration,t.airport_layover) for t in self.air_trips.all()]
+        trips_duration = [(lambda x,y : x + y)(t.flight_duration,t.airport_layover) for t in self.air_trips.all()]
+        return sum(trips_duration,timedelta())
 
     def stops(self):
         """
