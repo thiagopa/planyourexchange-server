@@ -72,5 +72,5 @@ class AirFareSerializer(serializers.ModelSerializer):
         depth = 1
 
 class UserLocationSerializer(serializers.Serializer):
-    longitute = serializers.FloatField()
-    latitute = serializers.FloatField()
+    longitude = serializers.FloatField()
+    latitude = serializers.FloatField()

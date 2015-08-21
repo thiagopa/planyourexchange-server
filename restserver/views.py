@@ -134,7 +134,7 @@ def closest_airport(request):
     location = UserLocationSerializer(data=request.data)
     if location.is_valid() :
         geo_a = GeoBase(data='airports', verbose=False)
-        airports = geo_a.findNearPoint((location.longitute, location.latitute), 40)
+        airports = geo_a.findNearPoint((location.latitude, location.longitude), 40)
         return Response(airports)
     else :
         return Response(location.errors,
