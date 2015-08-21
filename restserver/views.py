@@ -132,6 +132,11 @@ def closest_airport(request):
         Allows anyone who is authenticated because this view doesn't access database
     """
     location = UserLocationSerializer(data=request.data)
-    geo_a = GeoBase(data='airports', verbose=False)
-    airports = geo_a.findNearPoint((location.longitute, location.latitute), 40)
-    return Response(airports)
+    if location.is_valid() :
+        geo_a = GeoBase(data='airports', verbose=False)
+        airports = geo_a.findNearPoint((location.longitute, location.latitute), 40)
+        return Response(airports)
+    else :
+        return Response(location.errors,
+                            status=status.HTTP_400_BAD_REQUEST)
+        
