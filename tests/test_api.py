@@ -124,3 +124,14 @@ class SchoolCourseValueTest(BaseTest):
 class AirFareTest(BaseTest):
     def test_gru_syd(self):
         self.generic_list('/api/airfares/?origin=GRU&destination=SYD','No airfares for GRU to SYD')
+        
+    def test_airports_near_paris(self):
+        data = {
+            'latitude' : 48.84,
+            'longitude' : 2.367,
+            'radius' : 40 
+        }
+        response = self.client.post('/api/airports/',data)
+        self.assertEquals(response.status_code,status.HTTP_200_OK)
+        self.assertEquals(response.data , ["ORY","TNF","LBG","CDG"])
+        
