@@ -123,6 +123,9 @@ class AirFareViewSet(viewsets.ModelViewSet):
     serializer_class = AirFareSerializer
     filter_backends = (DjangoFilterBackend,)
     filter_fields = ('origin','destination')
+
+# Load airport data from GeoBase
+geo_airports = GeoBase(data='airports', verbose=False)
      
 @api_view(['POST'])
 @permission_classes((IsAuthenticated, ))
@@ -133,9 +136,10 @@ def closest_airport(request):
     """
     location = UserLocationSerializer(data=request.data)
     if location.is_valid() :
-        geo_a = GeoBase(data='airports', verbose=False)
-        airports = geo_a.findNearPoint((location.latitude, location.longitude), 40)
-        return Response(airports)
+        airports = geo_airports.findNearPoint((location.data['latitude'], location.data['longitude']), 40)
+        
+        # Just return the first one for now, but should support multiple options latter on...
+        return Response(airports[0][1])
     else :
         return Response(location.errors,
                             status=status.HTTP_400_BAD_REQUEST)
