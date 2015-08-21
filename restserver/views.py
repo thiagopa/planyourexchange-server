@@ -19,12 +19,15 @@ from rest_framework import viewsets, status
 from restserver.serializers import *
 from restserver.models import *
 from rest_framework.response import Response
-from rest_framework.decorators import detail_route, list_route
+from rest_framework.decorators import detail_route, list_route, api_view, permission_classes
 from rest_framework.filters import DjangoFilterBackend
+from rest_framework.permissions import IsAuthenticated, DjangoModelPermissions
+from GeoBases import GeoBase
 
 class CountryViewSet(viewsets.ModelViewSet):
     queryset = Country.objects.all()
     serializer_class = CountrySerializer
+    permission_classes = (DjangoModelPermissions,)
     
     @detail_route()
     def cities(self,request,pk=None):
@@ -48,6 +51,7 @@ class CountryViewSet(viewsets.ModelViewSet):
 class CityViewSet(viewsets.ModelViewSet):
     queryset = City.objects.all()
     serializer_class = CitySerializer
+    permission_classes = (DjangoModelPermissions,)
     
     @detail_route()
     def courses(self,request,pk=None):
@@ -84,6 +88,7 @@ class CityViewSet(viewsets.ModelViewSet):
 class SchoolCourseValueViewSet(viewsets.ModelViewSet):
     queryset = SchoolCourseValue.objects.all()
     serializer_class = SchoolCourseValueSerializer
+    permission_classes = (DjangoModelPermissions,)
     
     # Load School values according to given city, course or school 
     @list_route(methods=['post'])
@@ -110,8 +115,23 @@ class SchoolCourseValueViewSet(viewsets.ModelViewSet):
                             status=status.HTTP_400_BAD_REQUEST)
 
 class AirFareViewSet(viewsets.ModelViewSet):
-     queryset = AirFare.objects.all()
-     serializer_class = AirFareSerializer
-     filter_backends = (DjangoFilterBackend,)
-     filter_fields = ('origin','destination')
+    """
+        Airfare view set, includes a filter field to search origin and destination
+    """
+    permission_classes = (DjangoModelPermissions,)
+    queryset = AirFare.objects.all()
+    serializer_class = AirFareSerializer
+    filter_backends = (DjangoFilterBackend,)
+    filter_fields = ('origin','destination')
      
+@api_view(['POST'])
+@permission_classes((IsAuthenticated, ))
+def closest_airport(request):
+    """
+        Uses GeoBases component to identify which is the nearest airport
+        Allows anyone who is authenticated because this view doesn't access database
+    """
+    location = UserLocationSerializer(data=request.data)
+    geo_a = GeoBase(data='airports', verbose=False)
+    airports = geo_a.findNearPoint((location.longitute, location.latitute), 40)
+    return Response(airports)

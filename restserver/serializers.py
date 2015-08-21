@@ -70,3 +70,7 @@ class AirFareSerializer(serializers.ModelSerializer):
     class Meta:
         model = AirFare
         depth = 1
+
+class UserLocationSerializer(serializers.Serializer):
+    longitute = serializers.FloatField()
+    latitute = serializers.FloatField()
