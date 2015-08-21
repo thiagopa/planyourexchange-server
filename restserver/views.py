@@ -129,17 +129,15 @@ geo_airports = GeoBase(data='airports', verbose=False)
      
 @api_view(['POST'])
 @permission_classes((IsAuthenticated, ))
-def closest_airport(request):
+def nearby_airports(request):
     """
-        Uses GeoBases component to identify which is the nearest airport
+        Uses GeoBases component to identify which are the nearest airports for the given radius
         Allows anyone who is authenticated because this view doesn't access database
     """
     location = UserLocationSerializer(data=request.data)
     if location.is_valid() :
-        airports = geo_airports.findNearPoint((location.data['latitude'], location.data['longitude']), 40)
-        
-        # Just return the first one for now, but should support multiple options latter on...
-        return Response(airports[0][1])
+        airports = geo_airports.findNearPoint((location.data['latitude'], location.data['longitude']), location.data['radius'])
+        return Response([k for _,k in airports])
     else :
         return Response(location.errors,
                             status=status.HTTP_400_BAD_REQUEST)

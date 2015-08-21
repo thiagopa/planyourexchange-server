@@ -40,5 +40,5 @@ urlpatterns = [
     # django admin chaining combos
     url(r'^chaining/', include('smart_selects.urls')),
     # custom airport search
-    url(r'^api/airport/',views.closest_airport) 
+    url(r'^api/airports/',views.nearby_airports) 
 ]
