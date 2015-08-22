@@ -123,7 +123,10 @@ class SchoolCourseValueTest(BaseTest):
 
 class AirFareTest(BaseTest):
     def test_gru_syd(self):
-        self.generic_list('/api/airfares/?origin=GRU&destination=SYD','No airfares for GRU to SYD')
+        self.generic_list('/api/airfares/?origins=GRU&destination=SYD','No airfares for GRU to SYD')
+
+    def test_multiple_origins(self):
+        self.generic_list('/api/airfares/?origins=GRU,OOS&destination=SYD','No airfares for multiple destinations to SYD')
         
     def test_airports_near_paris(self):
         data = {

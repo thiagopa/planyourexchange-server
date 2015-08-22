@@ -166,6 +166,7 @@ REST_FRAMEWORK = {
     ],
 }
 
+DJANGO_LOG_LEVEL = 'INFO'
 USE_DJANGO_JQUERY = False
 JQUERY_URL='http://code.jquery.com/jquery-2.1.4.min.js'
 
@@ -174,3 +175,19 @@ try:
     from local_settings import *
 except ImportError:
     pass
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console'],
+            'level': DJANGO_LOG_LEVEL,
+        },
+    },
+}

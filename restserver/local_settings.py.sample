@@ -20,6 +20,9 @@ import os, dj_database_url
 # Turns debug on for dev
 DEBUG = True
 
+# Turns on Debug Log
+DJANGO_LOG_LEVEL=DEBUG 
+
 # Turn off SLL for dev
 SSLIFY_DISABLE = True
 

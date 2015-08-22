@@ -15,14 +15,14 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 """
-from rest_framework import viewsets, status
+from rest_framework import viewsets, status, generics
 from restserver.serializers import *
 from restserver.models import *
 from rest_framework.response import Response
 from rest_framework.decorators import detail_route, list_route, api_view, permission_classes
-from rest_framework.filters import DjangoFilterBackend
 from rest_framework.permissions import IsAuthenticated, DjangoModelPermissions
 from GeoBases import GeoBase
+import django_filters
 
 class CountryViewSet(viewsets.ModelViewSet):
     queryset = Country.objects.all()
@@ -114,15 +114,20 @@ class SchoolCourseValueViewSet(viewsets.ModelViewSet):
             return Response(serializer.errors,
                             status=status.HTTP_400_BAD_REQUEST)
 
-class AirFareViewSet(viewsets.ModelViewSet):
+class AirFareListView(generics.ListAPIView):
     """
-        Airfare view set, includes a filter field to search origin and destination
+        AirFare view list, search multiple origins and one destination
     """
-    permission_classes = (DjangoModelPermissions,)
-    queryset = AirFare.objects.all()
     serializer_class = AirFareSerializer
-    filter_backends = (DjangoFilterBackend,)
-    filter_fields = ('origin','destination')
+    permission_classes = (IsAuthenticated,)
+
+    def get_queryset(self):
+        origins = self.request.query_params.get('origins', None)
+        destination = self.request.query_params.get('destination',None)
+        
+        if origins is not None and destination is not None:
+            return AirFare.objects.filter(origin__in=origins.split(','),destination=destination)
+
 
 # Load airport data from GeoBase
 geo_airports = GeoBase(data='airports', verbose=False)

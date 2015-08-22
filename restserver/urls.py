@@ -27,7 +27,6 @@ router = routers.DefaultRouter()
 router.register(r'countries',views.CountryViewSet)
 router.register(r'cities',views.CityViewSet)
 router.register(r'schoolcoursevalue',views.SchoolCourseValueViewSet)
-router.register(r'airfares',views.AirFareViewSet)
 
 urlpatterns = [
     # Static web page
@@ -40,5 +39,7 @@ urlpatterns = [
     # django admin chaining combos
     url(r'^chaining/', include('smart_selects.urls')),
     # custom airport search
-    url(r'^api/airports/',views.nearby_airports) 
+    url(r'^api/airports/',views.nearby_airports),
+    # custom airfare search
+    url(r'^api/airfares/',views.AirFareListView.as_view()), 
 ]
