@@ -156,6 +156,8 @@ class AirTrip(models.Model):
     """
     operated_by = models.CharField(max_length=255)
     
+    trip_sequence = models.IntegerField(default=1)
+    
     origin = models.CharField(max_length=3)
     destination = models.CharField(max_length=3)
 
@@ -165,6 +167,9 @@ class AirTrip(models.Model):
     
     def __str__(self):
         return '%s to %s operated by %s' % (self.origin,self.destination,self.operated_by)
+    
+    class Meta:
+        ordering = ['trip_sequence']
 
 class AirFare(models.Model):
     """

@@ -186,18 +186,18 @@
 },
 {
     "fields": {
-        "abbreviation": "VIC",
+        "abbreviation": "NSW",
         "country": 1,
-        "name": "Victoria"
+        "name": "New South Wales"
     },
     "model": "restserver.state",
     "pk": 2
 },
 {
     "fields": {
-        "abbreviation": "NSW",
+        "abbreviation": "VIC",
         "country": 1,
-        "name": "New South Wales"
+        "name": "Victoria"
     },
     "model": "restserver.state",
     "pk": 3
@@ -339,9 +339,9 @@
     "fields": {
         "website": "http://www.bupa.com.au",
         "country": 1,
-        "couple_price_per_month": "200.00",
-        "familly_price_per_month": "220.00",
-        "single_price_per_month": "45.00"
+        "couple_price_per_month": "220.44",
+        "familly_price_per_month": "318.45",
+        "single_price_per_month": "44.50"
     },
     "model": "restserver.healthinsurance",
     "pk": 15
@@ -349,10 +349,11 @@
 {
     "fields": {
         "origin": "GRU",
-        "flight_duration": "04:25:00",
         "destination": "SCL",
-        "airport_layover": "06:55:00",
-        "operated_by": "TAM"
+        "trip_sequence": 1,
+        "flight_duration": "04:25:00",
+        "operated_by": "TAM",
+        "airport_layover": "06:55:00"
     },
     "model": "restserver.airtrip",
     "pk": 1
@@ -360,10 +361,11 @@
 {
     "fields": {
         "origin": "SCL",
-        "flight_duration": "13:10:00",
         "destination": "AKL",
-        "airport_layover": "02:00:00",
-        "operated_by": "LAN"
+        "trip_sequence": 1,
+        "flight_duration": "13:10:00",
+        "operated_by": "LAN",
+        "airport_layover": "02:00:00"
     },
     "model": "restserver.airtrip",
     "pk": 2
@@ -371,10 +373,11 @@
 {
     "fields": {
         "origin": "AKL",
-        "flight_duration": "03:40:00",
         "destination": "SYD",
-        "airport_layover": "00:00:00",
-        "operated_by": "LAN"
+        "trip_sequence": 1,
+        "flight_duration": "03:40:00",
+        "operated_by": "LAN",
+        "airport_layover": "00:00:00"
     },
     "model": "restserver.airtrip",
     "pk": 3
@@ -382,17 +385,108 @@
 {
     "fields": {
         "origin": "GRU",
+        "destination": "JNB",
+        "trip_sequence": 1,
+        "flight_duration": "08:15:00",
+        "operated_by": "South African",
+        "airport_layover": "09:40:00"
+    },
+    "model": "restserver.airtrip",
+    "pk": 4
+},
+{
+    "fields": {
+        "origin": "JNB",
+        "destination": "PER",
+        "trip_sequence": 1,
+        "flight_duration": "08:55:00",
+        "operated_by": "South African",
+        "airport_layover": "02:35:00"
+    },
+    "model": "restserver.airtrip",
+    "pk": 5
+},
+{
+    "fields": {
+        "origin": "PER",
+        "destination": "SYD",
+        "trip_sequence": 1,
+        "flight_duration": "04:10:00",
+        "operated_by": "Virgin Australia",
+        "airport_layover": "00:00:00"
+    },
+    "model": "restserver.airtrip",
+    "pk": 6
+},
+{
+    "fields": {
+        "origin": "GRU",
+        "destination": "SCL",
+        "trip_sequence": 1,
+        "flight_duration": "00:04:20",
+        "operated_by": "TAM",
+        "airport_layover": "13:40:00"
+    },
+    "model": "restserver.airtrip",
+    "pk": 7
+},
+{
+    "fields": {
+        "origin": "SCL",
+        "destination": "SYD",
+        "trip_sequence": 1,
+        "flight_duration": "14:15:00",
+        "operated_by": "Qantas",
+        "airport_layover": "00:00:00"
+    },
+    "model": "restserver.airtrip",
+    "pk": 8
+},
+{
+    "fields": {
+        "origin": "GRU",
         "price_currency": "BRL",
         "air_trips": [
-            1,
             2,
-            3
+            3,
+            1
         ],
-        "price": "5918.00",
+        "price": "5818.00",
         "destination": "SYD",
         "date": "2015-08-20"
     },
     "model": "restserver.airfare",
     "pk": 1
+},
+{
+    "fields": {
+        "origin": "GRU",
+        "price_currency": "USD",
+        "air_trips": [
+            4,
+            5,
+            6
+        ],
+        "price": "1677.00",
+        "destination": "SYD",
+        "date": "2015-08-23"
+    },
+    "model": "restserver.airfare",
+    "pk": 2
+},
+{
+    "fields": {
+        "origin": "GRU",
+        "price_currency": "USD",
+        "air_trips": [
+            7,
+            8
+        ],
+        "price": "2556.00",
+        "destination": "SYD",
+        "date": "2015-08-23"
+    },
+    "model": "restserver.airfare",
+    "pk": 3
 }
 ]
