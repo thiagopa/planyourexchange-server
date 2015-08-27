@@ -85,7 +85,7 @@ class CitiesTest(BaseTest):
         response = self.client.get('/api/cities/2/costofliving/')
         
         self.assertEquals(response.status_code,status.HTTP_200_OK)
-        self.assertEquals(response.data['city']['id'],2)
+        self.assertEquals(response.data['city'],2)
         
 class SchoolCourseValueTest(BaseTest):
     """
