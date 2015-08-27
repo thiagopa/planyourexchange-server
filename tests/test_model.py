@@ -17,13 +17,22 @@
 """
 from django.test import testcases
 from restserver.models import AirFare
+from datetime import timedelta
 
 class TestAirFares(testcases.TestCase):
     fixtures = ['restserver_testdata.json']
     
-    def setUp(self):
-        self.airfare = AirFare.objects.get(pk=3) 
-    
-    def test_AirFare_stops(self):
-        stops = self.airfare.stops()
+    def test_stops(self):
+        airfare = AirFare.objects.get(pk=3)
+        stops = airfare.stops()
         self.assertEquals(stops, ['SCL'])
+        
+        airfare = AirFare.objects.get(pk=1)
+        stops = airfare.stops()
+        self.assertEquals(stops, ['SCL','AKL'])
+        
+    def test_total_duration(self):
+        airfare = AirFare.objects.get(pk=1)
+        total_duration = airfare.total_duration()
+        
+        self.assertEquals(total_duration,timedelta(days=1,hours=6,minutes=10))

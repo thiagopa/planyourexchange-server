@@ -24,6 +24,7 @@ from rest_framework.authtoken.models import Token
 from smart_selects.db_fields import ChainedForeignKey 
 from djmoney.models.fields import MoneyField
 from datetime import timedelta
+from sets import Set
 
 class AbstractModel(models.Model):
     """
@@ -206,10 +207,11 @@ class AirFare(models.Model):
             First append origin and destination to a list if they're not the origin and destination already
             Last remove duplicates
         """
-        s = []
-        [(lambda x,y : [s.append(x), s.append(y)]) (t.origin,t.destination) for t in self.air_trips.all() if t.origin != self.origin and t.destination != self.destination] 
-        s = list(set(s))
-        return s
+        s = Set()
+        [(lambda x,y : [s.add(x), s.add(y)]) (t.origin,t.destination) for t in self.air_trips.all()] 
+        s.remove(self.origin)
+        s.remove(self.destination)
+        return list(s)
 
 # Generate token for user authentication
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)
