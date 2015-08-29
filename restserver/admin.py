@@ -19,6 +19,7 @@ from django.contrib import admin
 from django import forms
 from models import *
 from moneyed import CURRENCIES
+import autocomplete_light
 
 # Base Model to show real image of Icons intead of urls in forms
 @admin.register(Course)
@@ -132,4 +133,7 @@ class CostOfLivingModelAdmin(DefaultCurrencyAdminModel):
 class AirFareModelAdmin(admin.ModelAdmin):
     list_display = ('price','origin','destination','total_duration','stops')
 
-admin.site.register(AirTrip)
+@admin.register(AirTrip)
+class AirTripModelAdmin(admin.ModelAdmin):
+    origin = forms.CharField(widget=autocomplete_light.TextWidget('AirPortAutoComplete'))
+    destination = forms.CharField(widget=autocomplete_light.TextWidget('AirPortAutoComplete'))

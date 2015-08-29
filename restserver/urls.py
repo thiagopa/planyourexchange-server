@@ -15,7 +15,7 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program. If not, see <http://www.gnu.org/licenses/>.
 """
-from django.conf.urls import include, url
+from django.conf.urls import include, url, patterns
 from django.contrib import admin
 from django.views.generic.base import TemplateView
 from rest_framework import routers
@@ -38,6 +38,8 @@ urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     # django admin chaining combos
     url(r'^chaining/', include('smart_selects.urls')),
+    # autocomplete urls
+    url(r'^autocomplete/', include('autocomplete_light.urls')),
     # custom airport search
     url(r'^api/airports/',views.nearby_airports),
     # custom airfare search
