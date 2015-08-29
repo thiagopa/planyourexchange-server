@@ -133,7 +133,13 @@ class CostOfLivingModelAdmin(DefaultCurrencyAdminModel):
 class AirFareModelAdmin(admin.ModelAdmin):
     list_display = ('price','origin','destination','total_duration','stops')
 
-@admin.register(AirTrip)
-class AirTripModelAdmin(admin.ModelAdmin):
+class AirTripModelForm(forms.ModelForm):
     origin = forms.CharField(widget=autocomplete_light.TextWidget('AirPortAutoComplete'))
     destination = forms.CharField(widget=autocomplete_light.TextWidget('AirPortAutoComplete'))
+    
+    class Meta:
+        model = AirTrip
+
+@admin.register(AirTrip)
+class AirTripAdmin(admin.ModelAdmin):
+    form = AirTripModelForm
