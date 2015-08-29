@@ -129,10 +129,6 @@ class CostOfLivingModelAdmin(DefaultCurrencyAdminModel):
 
     )
 
-@admin.register(AirFare)
-class AirFareModelAdmin(admin.ModelAdmin):
-    list_display = ('price','origin','destination','total_duration','stops')
-
 """
 Register the auto complete and create a new model form for AirTrips
 """
@@ -140,13 +136,28 @@ from restserver.auto_complete import AirPortAutoComplete
 autocomplete_light.register(AirPortAutoComplete)
 
 class AirTripModelForm(forms.ModelForm):
-    origin = forms.CharField(widget=autocomplete_light.TextWidget('AirPortAutoComplete'))
-    destination = forms.CharField(widget=autocomplete_light.TextWidget('AirPortAutoComplete'))
-    
+    origin = forms.CharField(max_length=3,widget=autocomplete_light.TextWidget('AirPortAutoComplete'))
+    destination = forms.CharField(max_length=3,widget=autocomplete_light.TextWidget('AirPortAutoComplete'))
+
     class Meta:
         model = AirTrip
         fields = '__all__'
 
+class AirFareModelForm(forms.ModelForm):
+    origin = forms.CharField(max_length=3,widget=autocomplete_light.TextWidget('AirPortAutoComplete'))
+    destination = forms.CharField(max_length=3,widget=autocomplete_light.TextWidget('AirPortAutoComplete'))
+
+    class Meta:
+        model = AirFare
+        fields = '__all__'
+
 @admin.register(AirTrip)
 class AirTripAdmin(admin.ModelAdmin):
+    readonly_fields = ('origin_airport','destination_airport')
     form = AirTripModelForm
+    
+@admin.register(AirFare)
+class AirFareModelAdmin(admin.ModelAdmin):
+    list_display = ('price','origin','destination','total_duration','stops')
+    readonly_fields = ('origin_airport','destination_airport')
+    form = AirFareModelForm

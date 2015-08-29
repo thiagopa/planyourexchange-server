@@ -19,6 +19,9 @@ import autocomplete_light
 from restserver import geo_airports
 
 class AirPortAutoComplete(autocomplete_light.AutocompleteBase):
+    
+    choices = geo_airports.keys()
+    
     """
     Airport names auto complete
     """
@@ -29,10 +32,5 @@ class AirPortAutoComplete(autocomplete_light.AutocompleteBase):
         :py:meth:`~.base.AutocompleteBase.autocomplete_html`.
         """
         q = self.request.GET.get('q', '')
-        return [k.startswith(q) for k in geo_airports.keys()]
+        return [k for k in self.choices if k.startswith(q)]
     
-    def choices_for_values(self):
-        """
-        Return the list of choices corresponding to :py:attr:`values`.
-        """
-        return []

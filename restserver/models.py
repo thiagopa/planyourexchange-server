@@ -25,6 +25,7 @@ from smart_selects.db_fields import ChainedForeignKey
 from djmoney.models.fields import MoneyField
 from datetime import timedelta
 from sets import Set
+from restserver import geo_airports
 
 class AbstractModel(models.Model):
     """
@@ -151,7 +152,22 @@ class HealthInsurance(AbstractModel) :
     couple_price_per_month = models.DecimalField(max_digits=10, decimal_places=2)
     familly_price_per_month = models.DecimalField(max_digits=10, decimal_places=2)
 
-class AirTrip(models.Model):
+def airport_name(key):
+    return geo_airports.get(key,'name')
+
+class AirHelper:
+    """
+    Returns the full name for airports
+    """
+    @property
+    def origin_airport(self):
+        return airport_name(self.origin)
+
+    @property
+    def destination_airport(self):
+        return airport_name(self.destination)
+
+class AirTrip(models.Model,AirHelper):
     """
         Represents a trip that would ultimetily lead to final destination
     """
@@ -172,7 +188,7 @@ class AirTrip(models.Model):
     class Meta:
         ordering = ['trip_sequence']
 
-class AirFare(models.Model):
+class AirFare(models.Model,AirHelper):
     """
         AirFare object represents a "cached" air fare
     """
