@@ -28,10 +28,11 @@ class AirPortAutoComplete(autocomplete_light.AutocompleteBase):
         if set, this method is used by
         :py:meth:`~.base.AutocompleteBase.autocomplete_html`.
         """
-        return geo_airports.keys()
+        q = self.request.GET.get('q', '')
+        return [k.startswith(q) for k in geo_airports.keys()]
     
     def choices_for_values(self):
         """
         Return the list of choices corresponding to :py:attr:`values`.
         """
-        return geo_airports.keys()
+        return []
