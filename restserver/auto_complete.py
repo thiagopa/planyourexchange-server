@@ -34,5 +34,3 @@ class AirPortAutoComplete(autocomplete_light.AutocompleteBase):
         Return the list of choices corresponding to :py:attr:`values`.
         """
         return geo_airports.keys()
-
-autocomplete_light.register(AirPortAutoComplete)
