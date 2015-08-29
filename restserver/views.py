@@ -22,6 +22,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import detail_route, list_route, api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated, DjangoModelPermissions
 import django_filters
+from restserver import geo_airports
 
 class CountryViewSet(viewsets.ModelViewSet):
     queryset = Country.objects.all()
