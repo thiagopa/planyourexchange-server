@@ -21,7 +21,6 @@ from restserver.models import *
 from rest_framework.response import Response
 from rest_framework.decorators import detail_route, list_route, api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated, DjangoModelPermissions
-from GeoBases import GeoBase
 import django_filters
 
 class CountryViewSet(viewsets.ModelViewSet):
@@ -128,10 +127,6 @@ class AirFareListView(generics.ListAPIView):
         if origins is not None and destination is not None:
             return AirFare.objects.filter(origin__in=origins.split(','),destination=destination)
 
-
-# Load airport data from GeoBase
-geo_airports = GeoBase(data='airports', verbose=False)
-     
 @api_view(['POST'])
 @permission_classes((IsAuthenticated, ))
 def nearby_airports(request):
