@@ -62,7 +62,19 @@ class HealthInsuranceSerializer(serializers.ModelSerializer):
         model = HealthInsurance
         depth = 1
 
+class AirTripSerializer(serializers.ModelSerializer):
+    origin_airport = serializers.CharField()
+    destination_airport = serializers.CharField()
+
+    class Meta:
+        model = AirTrip
+
 class AirFareSerializer(serializers.ModelSerializer):
+    
+    air_trips = AirTripSerializer(many=True)
+    
+    origin_airport = serializers.CharField()
+    destination_airport = serializers.CharField()
     
     price = MoneyField()
     
