@@ -81,10 +81,17 @@ MIDDLEWARE_CLASSES = (
 
 ROOT_URLCONF = 'restserver.urls'
 
+# heroku template destination
+PROJECT_DIR = os.path.dirname(__file__) 
+
+TEMPLATE_DIRS = (
+    os.path.join(PROJECT_DIR, 'templates'),
+)
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': TEMPLATE_DIRS,
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -96,13 +103,6 @@ TEMPLATES = [
         },
     },
 ]
-
-# heroku template destination
-PROJECT_DIR = os.path.dirname(__file__) 
-
-TEMPLATE_DIRS = (
-    os.path.join(PROJECT_DIR, 'templates'),
-)
 
 
 WSGI_APPLICATION = 'restserver.wsgi.application'
